@@ -48,3 +48,13 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+
+## Tabs
+
+All tabs are located in the /app/(tabs) directory, with each .tsx file representing a separate page:
+- index.tsx corresponds to the event list page and uses the root route /
+- Other tab pages can be accessed via their respective routes (e.g. /jobs for the job page)
+
+Note: The icons implementation differs between iOS and web platforms, with icon definitions located in the /components/ui/IconSymbol.tsx file.
+

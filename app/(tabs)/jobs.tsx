@@ -1,10 +1,10 @@
-import { Image, StyleSheet } from "react-native";
+import { StyleSheet, Image } from "react-native";
 
-import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
 
-export default function Events() {
+export default function Jobs() {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
@@ -13,7 +13,7 @@ export default function Events() {
       }
     >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Events</ThemedText>
+        <ThemedText type="title">Jobs</ThemedText>
       </ThemedView>
     </ParallaxScrollView>
   );
@@ -22,11 +22,6 @@ export default function Events() {
 const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "row",
-    alignItems: "center",
     gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
   },
 });
