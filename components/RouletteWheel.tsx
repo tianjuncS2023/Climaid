@@ -17,12 +17,48 @@ const Wheel = () => {
 	return (
 		<>
 			<View style={styles.circleRow}>
-				<View style={[styles.pizza, styles.pizzaRed]} />
-				<View style={[styles.pizza, styles.pizzaBlue]} />
+				<View style={[styles.pizza, styles.pizzaRed]}>
+					<Text
+						style={[
+							styles.label,
+							{ transform: [{ rotateZ: "-135deg" }] },
+						]}
+					>
+						Red
+					</Text>
+				</View>
+				<View style={[styles.pizza, styles.pizzaBlue]}>
+					<Text
+						style={[
+							styles.label,
+							{ transform: [{ rotateZ: "-45deg" }] },
+						]}
+					>
+						Blue
+					</Text>
+				</View>
 			</View>
 			<View style={styles.circleRow}>
-				<View style={[styles.pizza, styles.pizzaGreen]} />
-				<View style={[styles.pizza, styles.pizzaYellow]} />
+				<View style={[styles.pizza, styles.pizzaGreen]}>
+					<Text
+						style={[
+							styles.label,
+							{ transform: [{ rotateZ: "135deg" }] },
+						]}
+					>
+						Green
+					</Text>
+				</View>
+				<View style={[styles.pizza, styles.pizzaYellow]}>
+					<Text
+						style={[
+							styles.label,
+							{ transform: [{ rotateZ: "45deg" }] },
+						]}
+					>
+						Yellow
+					</Text>
+				</View>
 			</View>
 		</>
 	);
@@ -94,8 +130,19 @@ const RouletteWheel = () => {
 
 const styles = StyleSheet.create({
 	text: {
-		color: "white",
+		color: "black",
 		fontSize: 16,
+	},
+	label: {
+		position: "absolute",
+		alignSelf: "center",
+		color: "black",
+		fontSize: 18,
+		fontWeight: "bold",
+		textAlign: "center",
+		justifyContent: "center",
+		width: "100%",
+		top: "40%",
 	},
 	infoBox: {
 		marginTop: 15,
@@ -129,7 +176,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#343a40",
 	},
 	circleContainer: {
 		width: 300,
@@ -140,11 +186,11 @@ const styles = StyleSheet.create({
 	pointer: {
 		width: 10,
 		height: 30,
-		backgroundColor: "black",
+		backgroundColor: "red",
 		position: "absolute",
 		top: -15,
 		borderWidth: 2,
-		borderColor: "white",
+		borderColor: "black",
 		zIndex: 6000,
 	},
 });
