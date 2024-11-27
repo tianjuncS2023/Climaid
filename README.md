@@ -98,3 +98,4 @@ The app asks users to choose from the following two user roles:
 ### References
 
 Roulette wheel: https://benhur-martins.medium.com/how-to-build-a-roulette-wheel-with-react-native-85516d36ce30
+Bogus change
