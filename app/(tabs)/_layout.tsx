@@ -67,6 +67,19 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="roulette"
+        options={{
+          title: "Roulette",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol
+              size={28}
+              name={"circle.fill" as IconSymbolName}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",
