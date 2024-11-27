@@ -10,7 +10,7 @@ import { IconSymbol } from "@/components/ui/IconSymbol";
 export default function Checkin() {
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
+      headerBackgroundColor={{ light: "#FFFFFF", dark: "#1D3D47" }}
       headerImage={
         <IconSymbol
           size={310}

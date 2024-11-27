@@ -28,7 +28,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index" // use 'index' as / route
+        name="events"
         options={{
           title: "Events",
           tabBarIcon: ({ color }) => (

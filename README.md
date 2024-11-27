@@ -58,3 +58,34 @@ All tabs are located in the /app/(tabs) directory, with each .tsx file represent
 
 Note: The icons implementation differs between iOS and web platforms, with icon definitions located in the /components/ui/IconSymbol.tsx file.
 
+## User Role Management & Logistics
+
+The app asks users to choose from the following two user roles:
+- Volunteer (0)
+- Event Organizer (1)
+
+### Key Components:
+
+1. **Role Context**
+   - Located in `/contexts/RoleContext.tsx`
+   - Manages user role state across the app
+   - Provides `useRole` hook for accessing and setting roles
+
+2. **Role Selection Screen**
+   - Located in `/app/role-select.tsx`
+   - Initial screen for role selection
+   - Redirects to events page after selection
+
+3. **Layout Changes**
+   - Modified `/app/_layout.tsx` to include role selection flow
+   - Added RoleProvider wrapper for global state management
+
+### Navigation Flow:
+1. User starts at role selection screen
+2. Upon selecting a role, user is redirected to events tab
+3. Role information persists throughout the app session
+
+### Example Usage
+1. import { useRole } from "@/contexts/RoleContext";
+2. const { role } = useRole();
+3. Use role in the component as needed
