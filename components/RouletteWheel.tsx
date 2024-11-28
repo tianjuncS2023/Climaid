@@ -1,9 +1,9 @@
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import {
 	GestureHandlerRootView,
-	Gesture,
 	GestureDetector,
+	Gesture,
 } from "react-native-gesture-handler";
 import Animated, {
 	useAnimatedStyle,
@@ -64,21 +64,13 @@ const Wheel = () => {
 	);
 };
 
-const Info: FC<{ currentColor: string; currentAngle: number }> = ({
-	currentAngle,
-	currentColor,
-}) => {
-	return (
-		<View style={styles.infoBox}>
-			<Text style={styles.text}>Current Color: {currentColor}</Text>
-			<Text style={styles.text}>Current Angle: {currentAngle}</Text>
-		</View>
-	);
-};
-
 const RouletteWheel = () => {
 	const rotation = useSharedValue(0);
-	const [currentAngle, setCurrentAngle] = useState(rotation.value);
+	const [hasSpun, setHasSpun] = useState(false);
+	const [winner, setWinner] = useState<string | null>(null);
+
+	// Throttle updates with a lastUpdate variable
+	let lastUpdate = Date.now();
 
 	const animatedStyles = useAnimatedStyle(() => {
 		return {
@@ -86,27 +78,61 @@ const RouletteWheel = () => {
 		};
 	});
 
-	const handleAngle = (value: number) => {
-		setCurrentAngle(parseInt(value.toFixed(), 10));
-	};
-	const easing = Easing.bezier(0.23, 1, 0.32, 1);
-	const gesture = Gesture.Pan().onUpdate((e) => {
-		rotation.value = withTiming(
-			Math.abs(e.velocityY) / 7 + rotation.value,
-			{
-				duration: 1000,
-				easing: easing,
-			},
-			() => runOnJS(handleAngle)(rotation.value % 360)
-		);
-	});
-
-	const getCurrentColor = () => {
-		if (currentAngle < 91) return "Red";
-		if (currentAngle < 181) return "Green";
-		if (currentAngle < 271) return "Yellow";
+	const determineWinner = (angle: number) => {
+		// Determine which quadrant the pointer lands on
+		if (angle < 91) return "Red";
+		if (angle < 181) return "Green";
+		if (angle < 271) return "Yellow";
 		return "Blue";
 	};
+
+	const gesture = Gesture.Pan()
+		.onUpdate((e) => {
+			if (hasSpun) return;
+
+			// Throttle updates to ~60fps
+			const now = Date.now();
+			if (now - lastUpdate > 16) {
+				const clampedVelocity = Math.max(
+					-5000,
+					Math.min(5000, e.velocityY)
+				); // Clamp velocity
+				rotation.value = rotation.value + clampedVelocity / 100;
+				lastUpdate = now;
+			}
+		})
+		.onEnd((e) => {
+			if (hasSpun) return;
+
+			runOnJS(setHasSpun)(true);
+			const finalSpin = Math.min(
+				5000,
+				Math.abs(e.velocityY) + Math.random() * 2000 + 360
+			);
+
+			rotation.value = withTiming(
+				rotation.value + finalSpin,
+				{
+					duration: 3000,
+					easing: Easing.bezier(0.23, 1, 0.32, 1),
+				},
+				(isFinished) => {
+					let winner = "";
+
+					const angle = rotation.value % 360;
+					if (angle < 91) {
+						winner = "Red";
+					} else if (angle < 181) {
+						winner = "Green";
+					} else if (angle < 271) {
+						winner = "Yellow";
+					} else {
+						winner = "Blue";
+					}
+					runOnJS(setWinner)(winner);
+				}
+			);
+		});
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -120,10 +146,15 @@ const RouletteWheel = () => {
 					</View>
 				</GestureDetector>
 			</GestureHandlerRootView>
-			<Info
-				currentAngle={currentAngle}
-				currentColor={getCurrentColor()}
-			/>
+			{winner ? (
+				<View style={styles.infoBox}>
+					<Text style={styles.text}>Winner: {winner}!</Text>
+				</View>
+			) : (
+				<View style={styles.infoBox}>
+					<Text style={styles.text}>Spin the wheel to play!</Text>
+				</View>
+			)}
 		</SafeAreaView>
 	);
 };
@@ -164,13 +195,6 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		overflow: "hidden",
 		borderColor: "#ced4da",
-	},
-	ball: {
-		width: 100,
-		height: 100,
-		borderRadius: 100,
-		backgroundColor: "blue",
-		alignSelf: "center",
 	},
 	container: {
 		flex: 1,

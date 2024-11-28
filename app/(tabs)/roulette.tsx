@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Image } from "react-native";
 import RouletteWheel from "@/components/RouletteWheel";
 import { ThemedView } from "@/components/ThemedView";
-import globalStorage from "@/util/globalContext";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 
 export default function Roulette() {
