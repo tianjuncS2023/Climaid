@@ -3,21 +3,15 @@ import { Button, Image, StyleSheet, View } from "react-native";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { router } from "expo-router";
-import { SafeAreaInsetsContext } from "react-native-safe-area-context";
 
-export const navigationOptions = {
-  headerShown: false,
-};
+export default function AddRole() {
 
-export default function EditQuiz() {
+  const saveAndPublish = () => {
 
-  const addQuestion = () => {
-    router.replace('/addquestion');
   }
 
-  const addRole = () => {
-    router.replace('/addrole');
+  const cancel = () => {
+
   }
 
   return (
@@ -31,12 +25,14 @@ export default function EditQuiz() {
         <ThemedText>Note: This Quiz helps volunteers discover volunteer roles that match their interests. You can enhance this quiz by adding more questions for more precise insights or creating new role types for better recommendations.</ThemedText>
       </ThemedView>
       <View style = {{flexDirection:'row',flexWrap:'wrap'}}>
-        <ThemedView style={styles.titleContainer}>
-          <ThemedText type="title" style={{ fontSize: 25 }}>Question List✔️</ThemedText>
-        </ThemedView>
         <Button
-          onPress={addQuestion}
-          title="Add Question"
+          onPress={cancel}
+          title="Save & Publish"
+          color="#FFFFFF"
+          />
+        <Button
+          onPress={saveAndPublish}
+          title="Save & Publish"
           color="#FFFFFF"
           />
       </View>
@@ -46,29 +42,13 @@ export default function EditQuiz() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 40,
-  },
-  button: {
-    backgroundColor: "#0a7ea4",
-    paddingVertical: 12,
-    paddingHorizontal: 48,
-    borderRadius: 8,
-    minWidth: 240,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "600",
-  },
   titleContainer: {
-    flexDirection: "column",
+    flexDirection: "row",
     alignItems: "center",
-    marginTop: 220,
-    gap: 20,
+    gap: 8,
+  },
+  stepContainer: {
+    gap: 8,
+    marginBottom: 8,
   },
 });

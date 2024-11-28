@@ -2,17 +2,17 @@ import { StyleSheet, Image, Pressable } from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { Redirect, router } from "expo-router";
+import { router } from "expo-router";
 import { useRole, UserRole } from "@/contexts/RoleContext";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
 
 export default function Jobs() {
   const { role } = useRole();
   const handleTakeQuiz = () => {
-    router.replace('/editquiz');
+    router.replace('/takeQuiz');
   }
   const handleEditQuiz = () => {
-    router.replace("/checkin");
+    router.replace('/editquiz');
   }
   return (
     <ParallaxScrollView
