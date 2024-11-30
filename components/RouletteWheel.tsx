@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Pressable } from "react-native";
 
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
@@ -23,10 +23,7 @@ const Wheel = () => {
 			<ThemedView style={styles.circleRow}>
 				<ThemedView style={[styles.pizza, styles.pizzaRed]}>
 					<ThemedText
-						style={[
-							styles.label,
-							{ transform: "rotateZ(-135deg)" },
-						]}
+						style={[styles.label, { transform: "rotate(-135deg)" }]}
 					>
 						Digging Crew
 					</ThemedText>
@@ -34,7 +31,7 @@ const Wheel = () => {
 
 				<ThemedView style={[styles.pizza, styles.pizzaBlue]}>
 					<ThemedText
-						style={[styles.label, { transform: "rotateZ(-45deg)" }]}
+						style={[styles.label, { transform: "rotate(-45deg)" }]}
 					>
 						Planting Crew
 					</ThemedText>
@@ -43,7 +40,7 @@ const Wheel = () => {
 			<ThemedView style={styles.circleRow}>
 				<ThemedView style={[styles.pizza, styles.pizzaGreen]}>
 					<ThemedText
-						style={[styles.label, { transform: "rotateZ(135deg)" }]}
+						style={[styles.label, { transform: "rotate(135deg)" }]}
 					>
 						Refreshments Crew
 					</ThemedText>
@@ -64,6 +61,15 @@ const RouletteWheel = () => {
 	const rotation = useSharedValue(0);
 	const [hasSpun, setHasSpun] = useState(false);
 	const [winner, setWinner] = useState<string | null>(null);
+	const [group, setGroup] = useState<string | null>(null);
+
+	useEffect(() => {
+		if (winner !== null) {
+			setTimeout(() => {
+				setGroup("A1");
+			}, 2000);
+		}
+	}, [winner]);
 
 	// Throttle updates with a lastUpdate variable
 	let lastUpdate = Date.now();
@@ -105,49 +111,83 @@ const RouletteWheel = () => {
 					easing: Easing.bezier(0.23, 1, 0.32, 1),
 				},
 				(_) => {
-					let winner = "";
+					let _winner = "";
 
 					const angle = rotation.value % 360;
 					if (angle < 91) {
-						winner = "Red";
+						_winner = "Red";
 					} else if (angle < 181) {
-						winner = "Green";
+						_winner = "Green";
 					} else if (angle < 271) {
-						winner = "Yellow";
+						_winner = "Yellow";
 					} else {
-						winner = "Blue";
+						_winner = "Blue";
 					}
-					runOnJS(setWinner)(winner);
+
+					runOnJS(setWinner)(_winner);
 				}
 			);
 		});
 
 	return (
 		<>
-			<ThemedView style={styles.rouletteWheelContainer}>
-				<GestureHandlerRootView>
-					<GestureDetector gesture={gesture}>
-						<ThemedView style={styles.circleContainer}>
-							<View style={styles.pointer} />
-							<Animated.View
-								style={[styles.circle, animatedStyles]}
-							>
-								<Wheel />
-							</Animated.View>
-						</ThemedView>
-					</GestureDetector>
-				</GestureHandlerRootView>
-				<ThemedView style={styles.infoBox}>
-					{winner ? (
-						<ThemedText>Winner: {winner}</ThemedText>
-					) : (
-						<ThemedText>Spin the wheel to play!</ThemedText>
-					)}
+			{group ? (
+				<ThemedView style={styles.container}>
+					<ThemedView style={styles.titleContainer}>
+						<ThemedText type="title">{winner}</ThemedText>
+						<ThemedText type="subtitle">
+							See Group {group}
+						</ThemedText>
+						<Pressable
+							style={styles.button}
+							onPress={() => console.log("Continue Pressed!")}
+						>
+							<ThemedText style={styles.buttonText}>
+								Continue
+							</ThemedText>
+						</Pressable>
+					</ThemedView>
 				</ThemedView>
-			</ThemedView>
+			) : (
+				<ThemedView style={styles.container}>
+					<ThemedView style={styles.titleContainer}>
+						<ThemedText type="title">Spin for a Role!</ThemedText>
+					</ThemedView>
+					<ThemedView style={styles.rouletteContainer}>
+						<ThemedView style={styles.rouletteWheelContainer}>
+							<GestureHandlerRootView>
+								<GestureDetector gesture={gesture}>
+									<ThemedView style={styles.circleContainer}>
+										<ThemedView style={styles.pointer} />
+										<Animated.View
+											style={[
+												styles.circle,
+												animatedStyles,
+											]}
+										>
+											<Wheel />
+										</Animated.View>
+									</ThemedView>
+								</GestureDetector>
+							</GestureHandlerRootView>
+							<ThemedView style={styles.infoBox}>
+								{winner ? (
+									<ThemedText>Winner: {winner}</ThemedText>
+								) : (
+									<ThemedText>
+										Spin the wheel to play!
+									</ThemedText>
+								)}
+							</ThemedView>
+						</ThemedView>
+					</ThemedView>
+				</ThemedView>
+			)}
 		</>
 	);
 };
+
+// TODO: move styles to separate location, reuse them
 
 const styles = StyleSheet.create({
 	rouletteWheelContainer: {
@@ -171,6 +211,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		top: "40%",
 	},
+	// circleRow: { width: "100%", height: "50%", flexDirection: "row" },
 	circleRow: { width: "100%", height: "50%", flexDirection: "row" },
 	pizza: { width: "50%", height: "100%" },
 	pizzaRed: { backgroundColor: "#ce4257" },
@@ -207,6 +248,35 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		borderColor: "black",
 		zIndex: 6000,
+	},
+	rouletteContainer: {
+		flexDirection: "row",
+		gap: 8,
+	},
+	container: {
+		flex: 1,
+		alignItems: "center",
+		gap: 40,
+	},
+	titleContainer: {
+		flexDirection: "column",
+		alignItems: "center",
+		marginTop: 220,
+		gap: 20,
+	},
+
+	button: {
+		backgroundColor: "#0a7ea4",
+		paddingVertical: 12,
+		paddingHorizontal: 48,
+		borderRadius: 8,
+		minWidth: 240,
+		alignItems: "center",
+	},
+	buttonText: {
+		color: "#fff",
+		fontSize: 18,
+		fontWeight: "600",
 	},
 });
 
