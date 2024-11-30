@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+
+import { ThemedView } from "@/components/ThemedView";
+import { ThemedText } from "@/components/ThemedText";
+
 import {
 	GestureHandlerRootView,
 	GestureDetector,
@@ -16,50 +20,42 @@ import Animated, {
 const Wheel = () => {
 	return (
 		<>
-			<View style={styles.circleRow}>
-				<View style={[styles.pizza, styles.pizzaRed]}>
-					<Text
+			<ThemedView style={styles.circleRow}>
+				<ThemedView style={[styles.pizza, styles.pizzaRed]}>
+					<ThemedText
 						style={[
 							styles.label,
-							{ transform: [{ rotateZ: "-135deg" }] },
+							{ transform: "rotateZ(-135deg)" },
 						]}
 					>
-						Red
-					</Text>
-				</View>
-				<View style={[styles.pizza, styles.pizzaBlue]}>
-					<Text
-						style={[
-							styles.label,
-							{ transform: [{ rotateZ: "-45deg" }] },
-						]}
+						Digging Crew
+					</ThemedText>
+				</ThemedView>
+
+				<ThemedView style={[styles.pizza, styles.pizzaBlue]}>
+					<ThemedText
+						style={[styles.label, { transform: "rotateZ(-45deg)" }]}
 					>
-						Blue
-					</Text>
-				</View>
-			</View>
-			<View style={styles.circleRow}>
-				<View style={[styles.pizza, styles.pizzaGreen]}>
-					<Text
-						style={[
-							styles.label,
-							{ transform: [{ rotateZ: "135deg" }] },
-						]}
+						Planting Crew
+					</ThemedText>
+				</ThemedView>
+			</ThemedView>
+			<ThemedView style={styles.circleRow}>
+				<ThemedView style={[styles.pizza, styles.pizzaGreen]}>
+					<ThemedText
+						style={[styles.label, { transform: "rotateZ(135deg)" }]}
 					>
-						Green
-					</Text>
-				</View>
-				<View style={[styles.pizza, styles.pizzaYellow]}>
-					<Text
-						style={[
-							styles.label,
-							{ transform: [{ rotateZ: "45deg" }] },
-						]}
+						Refreshments Crew
+					</ThemedText>
+				</ThemedView>
+				<ThemedView style={[styles.pizza, styles.pizzaYellow]}>
+					<ThemedText
+						style={[styles.label, { transform: "rotateZ(45deg)" }]}
 					>
-						Yellow
-					</Text>
-				</View>
-			</View>
+						Cleanup Crew
+					</ThemedText>
+				</ThemedView>
+			</ThemedView>
 		</>
 	);
 };
@@ -77,14 +73,6 @@ const RouletteWheel = () => {
 			transform: [{ rotateZ: `${rotation.value}deg` }],
 		};
 	});
-
-	const determineWinner = (angle: number) => {
-		// Determine which quadrant the pointer lands on
-		if (angle < 91) return "Red";
-		if (angle < 181) return "Green";
-		if (angle < 271) return "Yellow";
-		return "Blue";
-	};
 
 	const gesture = Gesture.Pan()
 		.onUpdate((e) => {
@@ -116,7 +104,7 @@ const RouletteWheel = () => {
 					duration: 3000,
 					easing: Easing.bezier(0.23, 1, 0.32, 1),
 				},
-				(isFinished) => {
+				(_) => {
 					let winner = "";
 
 					const angle = rotation.value % 360;
@@ -135,31 +123,39 @@ const RouletteWheel = () => {
 		});
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<GestureHandlerRootView>
-				<GestureDetector gesture={gesture}>
-					<View style={styles.circleContainer}>
-						<View style={styles.pointer} />
-						<Animated.View style={[styles.circle, animatedStyles]}>
-							<Wheel />
-						</Animated.View>
-					</View>
-				</GestureDetector>
-			</GestureHandlerRootView>
-			{winner ? (
-				<View style={styles.infoBox}>
-					<Text style={styles.text}>Winner: {winner}!</Text>
-				</View>
-			) : (
-				<View style={styles.infoBox}>
-					<Text style={styles.text}>Spin the wheel to play!</Text>
-				</View>
-			)}
-		</SafeAreaView>
+		<>
+			<ThemedView style={styles.rouletteWheelContainer}>
+				<GestureHandlerRootView>
+					<GestureDetector gesture={gesture}>
+						<ThemedView style={styles.circleContainer}>
+							<View style={styles.pointer} />
+							<Animated.View
+								style={[styles.circle, animatedStyles]}
+							>
+								<Wheel />
+							</Animated.View>
+						</ThemedView>
+					</GestureDetector>
+				</GestureHandlerRootView>
+				<ThemedView style={styles.infoBox}>
+					{winner ? (
+						<ThemedText>Winner: {winner}</ThemedText>
+					) : (
+						<ThemedText>Spin the wheel to play!</ThemedText>
+					)}
+				</ThemedView>
+			</ThemedView>
+		</>
 	);
 };
 
 const styles = StyleSheet.create({
+	rouletteWheelContainer: {
+		height: 350,
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "space-between",
+	},
 	text: {
 		color: "black",
 		fontSize: 16,
@@ -174,11 +170,6 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		width: "100%",
 		top: "40%",
-	},
-	infoBox: {
-		marginTop: 15,
-		height: 40,
-		justifyContent: "space-between",
 	},
 	circleRow: { width: "100%", height: "50%", flexDirection: "row" },
 	pizza: { width: "50%", height: "100%" },
@@ -196,15 +187,15 @@ const styles = StyleSheet.create({
 		overflow: "hidden",
 		borderColor: "#ced4da",
 	},
-	container: {
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-	},
 	circleContainer: {
 		width: 300,
 		height: 300,
 		justifyContent: "center",
+		alignItems: "center",
+	},
+	infoBox: {
+		position: "relative",
+		flexDirection: "column",
 		alignItems: "center",
 	},
 	pointer: {

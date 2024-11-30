@@ -2,28 +2,35 @@ import React from "react";
 import { StyleSheet, Image } from "react-native";
 import RouletteWheel from "@/components/RouletteWheel";
 import { ThemedView } from "@/components/ThemedView";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
 
 export default function Roulette() {
 	return (
-		<ParallaxScrollView
-			headerBackgroundColor={{ light: "#FFD6E0", dark: "#1F1D47" }}
-			headerImage={
-				<Image
-					source={require("@/assets/images/partial-react-logo.png")}
-				/>
-			}
-		>
+		<ThemedView style={styles.container}>
 			<ThemedView style={styles.titleContainer}>
+				<ThemedText type="title">Spin for a Role!</ThemedText>
+			</ThemedView>
+			<ThemedView style={styles.rouletteContainer}>
 				<RouletteWheel />
 			</ThemedView>
-		</ParallaxScrollView>
+		</ThemedView>
 	);
 }
 
 const styles = StyleSheet.create({
-	titleContainer: {
+	rouletteContainer: {
 		flexDirection: "row",
 		gap: 8,
+	},
+	container: {
+		flex: 1,
+		alignItems: "center",
+		gap: 40,
+	},
+	titleContainer: {
+		flexDirection: "column",
+		alignItems: "center",
+		marginTop: 220,
+		gap: 20,
 	},
 });
