@@ -1,129 +1,186 @@
-import { StyleSheet, Image, Platform } from "react-native";
-
-import { Collapsible } from "@/components/Collapsible";
-import { ExternalLink } from "@/components/ExternalLink";
+import { useEffect, useState } from "react";
+import { StyleSheet, Pressable, Image } from "react-native";
+import { useNavigation } from "@react-navigation/native"; // Import for navigation listeners
+import { ExperienceMeter } from "@/components/ExperienceMeter";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { useXP } from "@/contexts/XPContext";
+import { useLevel } from "@/contexts/LevelContext";
+import { CameraView, useCameraPermissions } from "expo-camera";
+import { router } from "expo-router";
 
 export default function Checkin() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#FFFFFF", dark: "#1D3D47" }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Check in</ThemedText>
-      </ThemedView>
-      <ThemedText>
-        This app includes example code to help you get started.
-      </ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          and{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{" "}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the
-          web version, press <ThemedText type="defaultSemiBold">w</ThemedText>{" "}
-          in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the{" "}
-          <ThemedText type="defaultSemiBold">@2x</ThemedText> and{" "}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to
-          provide files for different screen densities
-        </ThemedText>
-        <Image
-          source={require("@/assets/images/react-logo.png")}
-          style={{ alignSelf: "center" }}
-        />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Custom fonts">
-        <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText>{" "}
-          to see how to load{" "}
-          <ThemedText style={{ fontFamily: "SpaceMono" }}>
-            custom fonts such as this one.
-          </ThemedText>
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{" "}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook
-          lets you inspect what the user's current color scheme is, and so you
-          can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{" "}
-          <ThemedText type="defaultSemiBold">
-            components/HelloWave.tsx
-          </ThemedText>{" "}
-          component uses the powerful{" "}
-          <ThemedText type="defaultSemiBold">
-            react-native-reanimated
-          </ThemedText>{" "}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The{" "}
-              <ThemedText type="defaultSemiBold">
-                components/ParallaxScrollView.tsx
-              </ThemedText>{" "}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
-  );
+	const { experience, setExperience } = useXP();
+	const { level, setLevel } = useLevel();
+	const [isCheckIn, setIsCheckIn] = useState(false);
+	const [isLevelUp, setIsLevelUp] = useState(false);
+	const [permission, requestPermission] = useCameraPermissions();
+	const navigation = useNavigation();
+
+	// Request permission for the camera
+	useEffect(() => {
+		requestPermission();
+	}, []);
+
+	// Add a listener to reset check-in state when the page is focused
+	useEffect(() => {
+		const unsubscribe = navigation.addListener("focus", () => {
+			setIsCheckIn(false); // Reset check-in state on page load
+		});
+
+		// Cleanup listener when the component unmounts
+		return unsubscribe;
+	}, [navigation]);
+
+	const handleXP = (increment: number) => {
+		const xp = experience;
+		if (xp + increment >= 3000) {
+			const score = (xp + increment) - 3000
+			setExperience(score);
+			setLevel(level + 1);
+			setIsLevelUp(true);
+
+		} else {
+			setExperience(xp + increment);
+		}
+	};
+
+	const isPermissionGranted = Boolean(permission?.granted);
+
+	return (
+		<ParallaxScrollView
+			headerBackgroundColor={{ light: "#FFFFFF", dark: "#1D3D47" }}
+			headerImage={
+				<IconSymbol
+					size={310}
+					color="#808080"
+					name="chevron.left.forwardslash.chevron.right"
+					style={styles.headerImage}
+				/>
+			}
+		>
+
+		<ThemedView>
+			<ThemedView style={styles.titleContainer}>
+				<ThemedText type="title">Check in</ThemedText>
+			</ThemedView>
+			
+			<ThemedView style={styles.titleContainer}>
+				<ExperienceMeter />
+			</ThemedView>
+			{isLevelUp && (
+				<ThemedView>
+					<ThemedText style={styles.boldedText}>
+						Level Up!
+					</ThemedText>
+
+						<Pressable onPress={() => setIsLevelUp(false)} style={styles.button} >
+							<ThemedText style={styles.buttonText} >
+							Continue
+						</ThemedText>
+					</Pressable>
+				</ThemedView>
+			)}
+			{/* Show CameraView only if user hasn't checked in */}
+			{isPermissionGranted && !isCheckIn && !isLevelUp && (
+				<ThemedView style={styles.cameraContainer}>
+
+					<ThemedText style={styles.cameraGuideText}>
+						Scan the Event QR code to check-in and receive Experience Points
+					</ThemedText>
+					<CameraView
+						style={styles.qr}
+						facing="back"
+						onBarcodeScanned={({ data }) => {
+							handleXP(400)
+							setIsCheckIn(true); // Set check-in state to true once QR is scanned
+						}}
+					/>
+				</ThemedView>
+				
+			)}
+
+			{isCheckIn && !isLevelUp && (
+				<ThemedView>
+						<ThemedText style={styles.boldedText}>Check-in Complete!</ThemedText>
+					
+					<Image
+						source={require("@/assets/images/Check Broken.png")}
+						style={styles.image}
+					/>
+					
+						<ThemedText style={styles.containerText}>Click here to be assigned a role!</ThemedText>
+
+						<Pressable style={styles.button} 
+								   onPress={() => router.replace("/events")}>
+							<ThemedText style={styles.buttonText}>
+								Continue
+							</ThemedText>
+					</Pressable>
+				</ThemedView>
+			)}
+		</ThemedView>
+
+		</ParallaxScrollView>
+	);
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: "#808080",
-    bottom: -90,
-    left: -35,
-    position: "absolute",
-  },
-  titleContainer: {
-    flexDirection: "row",
-    gap: 8,
-  },
+	headerImage: {
+		color: "#808080",
+		bottom: -90,
+		left: -35,
+		position: "absolute",
+	},
+	titleContainer: {
+		flexDirection: "row",
+		gap: 8,
+	},
+	image: {
+		marginLeft: "auto",
+		marginRight: "auto"
+	},
+	containerText: {
+		textAlign: "center"
+	},
+	boldedText: {
+		textAlign: "center",
+		fontSize: 24,
+		lineHeight: 30,
+		fontWeight: "bold",
+		color: "#243642"
+	},
+	button: {
+		backgroundColor: "#629584",
+		paddingVertical: 12,
+		paddingHorizontal: 48,
+		borderRadius: 8,
+		minWidth: 240,
+		alignItems: "center",
+		marginTop: 10,
+		marginBottom: 10
+	},
+	buttonText: {
+		color: "#E2F1E7",
+		fontSize: 18,
+		fontWeight: "600",
+	},
+	cameraGuideText: {
+		color: "#243642",
+		textAlign: "center"
+	},
+	cameraContainer: {
+		borderRadius: 20,
+		
+	},
+	qr: {
+		width: 330,
+		height: 300,
+		marginLeft: "auto",
+		marginRight: "auto",
+		marginTop:20,
+		borderRadius: 20
+	},
 });
