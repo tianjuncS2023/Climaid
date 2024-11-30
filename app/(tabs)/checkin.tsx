@@ -23,7 +23,6 @@ export default function Checkin() {
 
 	// Add a listener to reset check-in state when the page is focused
 	useEffect(() => {
-
 		requestPermission();
 		const unsubscribe = navigation.addListener("focus", () => {
 			setIsCheckIn(false); // Reset check-in state on page load
@@ -36,11 +35,10 @@ export default function Checkin() {
 	const handleXP = (increment: number) => {
 		const xp = experience;
 		if (xp + increment >= 3000) {
-			const score = (xp + increment) - 3000
+			const score = xp + increment - 3000;
 			setExperience(score);
 			setLevel(level + 1);
 			setIsLevelUp(true);
-
 		} else {
 			setExperience(xp + increment);
 		}
@@ -60,68 +58,74 @@ export default function Checkin() {
 				/>
 			}
 		>
+			<ThemedView>
+				<ThemedView style={styles.titleContainer}>
+					<ThemedText type="title">Check in</ThemedText>
+				</ThemedView>
 
-		<ThemedView>
-			<ThemedView style={styles.titleContainer}>
-				<ThemedText type="title">Check in</ThemedText>
-			</ThemedView>
-			
-			<ThemedView style={styles.titleContainer}>
-				<ExperienceMeter />
-			</ThemedView>
-			{isLevelUp && (
-				<ThemedView>
-					<ThemedText style={styles.boldedText}>
-						Level Up!
-					</ThemedText>
-
-						<Pressable onPress={() => setIsLevelUp(false)} style={styles.button} >
-							<ThemedText style={styles.buttonText} >
-							Continue
+				<ThemedView style={styles.titleContainer}>
+					<ExperienceMeter />
+				</ThemedView>
+				{isLevelUp && (
+					<ThemedView>
+						<ThemedText style={styles.boldedText}>
+							Level Up!
 						</ThemedText>
-					</Pressable>
-				</ThemedView>
-			)}
-			{/* Show CameraView only if user hasn't checked in */}
-			{isPermissionGranted && !isCheckIn && !isLevelUp && (
-				<ThemedView style={styles.cameraContainer}>
 
-					<ThemedText style={styles.cameraGuideText}>
-						Scan the Event QR code to check-in and receive Experience Points
-					</ThemedText>
-					<CameraView
-						style={styles.qr}
-						facing="back"
-						onBarcodeScanned={({ data }) => {
-							handleXP(400)
-							setIsCheckIn(true); // Set check-in state to true once QR is scanned
-						}}
-					/>
-				</ThemedView>
-				
-			)}
-
-			{isCheckIn && !isLevelUp && (
-				<ThemedView>
-						<ThemedText style={styles.boldedText}>Check-in Complete!</ThemedText>
-					
-					<Image
-						source={require("@/assets/images/Check Broken.png")}
-						style={styles.image}
-					/>
-					
-						<ThemedText style={styles.containerText}>Click here to be assigned a role!</ThemedText>
-
-						<Pressable style={styles.button} 
-								   onPress={() => router.replace("/events")}>
+						<Pressable
+							onPress={() => setIsLevelUp(false)}
+							style={styles.button}
+						>
 							<ThemedText style={styles.buttonText}>
 								Continue
 							</ThemedText>
-					</Pressable>
-				</ThemedView>
-			)}
-		</ThemedView>
+						</Pressable>
+					</ThemedView>
+				)}
+				{/* Show CameraView only if user hasn't checked in */}
+				{isPermissionGranted && !isCheckIn && !isLevelUp && (
+					<ThemedView style={styles.cameraContainer}>
+						<ThemedText style={styles.cameraGuideText}>
+							Scan the Event QR code to check-in and receive
+							Experience Points
+						</ThemedText>
+						<CameraView
+							style={styles.qr}
+							facing="back"
+							onBarcodeScanned={({ data }) => {
+								handleXP(400);
+								setIsCheckIn(true); // Set check-in state to true once QR is scanned
+							}}
+						/>
+					</ThemedView>
+				)}
 
+				{isCheckIn && !isLevelUp && (
+					<ThemedView>
+						<ThemedText style={styles.boldedText}>
+							Check-in Complete!
+						</ThemedText>
+
+						<Image
+							source={require("@/assets/images/Check Broken.png")}
+							style={styles.image}
+						/>
+
+						<ThemedText style={styles.containerText}>
+							Click here to be assigned a role!
+						</ThemedText>
+
+						<Pressable
+							style={styles.button}
+							onPress={() => router.replace("/roulette")}
+						>
+							<ThemedText style={styles.buttonText}>
+								Continue
+							</ThemedText>
+						</Pressable>
+					</ThemedView>
+				)}
+			</ThemedView>
 		</ParallaxScrollView>
 	);
 }
@@ -139,17 +143,17 @@ const styles = StyleSheet.create({
 	},
 	image: {
 		marginLeft: "auto",
-		marginRight: "auto"
+		marginRight: "auto",
 	},
 	containerText: {
-		textAlign: "center"
+		textAlign: "center",
 	},
 	boldedText: {
 		textAlign: "center",
 		fontSize: 24,
 		lineHeight: 30,
 		fontWeight: "bold",
-		color: "#243642"
+		color: "#243642",
 	},
 	button: {
 		backgroundColor: "#629584",
@@ -159,7 +163,7 @@ const styles = StyleSheet.create({
 		minWidth: 240,
 		alignItems: "center",
 		marginTop: 10,
-		marginBottom: 10
+		marginBottom: 10,
 	},
 	buttonText: {
 		color: "#E2F1E7",
@@ -168,18 +172,17 @@ const styles = StyleSheet.create({
 	},
 	cameraGuideText: {
 		color: "#243642",
-		textAlign: "center"
+		textAlign: "center",
 	},
 	cameraContainer: {
 		borderRadius: 20,
-		
 	},
 	qr: {
 		width: 330,
 		height: 300,
 		marginLeft: "auto",
 		marginRight: "auto",
-		marginTop:20,
-		borderRadius: 20
+		marginTop: 20,
+		borderRadius: 20,
 	},
 });

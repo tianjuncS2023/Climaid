@@ -9,89 +9,76 @@ import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+	const colorScheme = useColorScheme();
 
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: "absolute",
-          },
-          default: {},
-        }),
-      }}
-    >
-      <Tabs.Screen
-        name="events"
-        options={{
-          title: "Events",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol
-              size={28}
-              name={"calendar" as IconSymbolName}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="jobs"
-        options={{
-          title: "Jobs",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol
-              size={28}
-              name={"briefcase.fill" as IconSymbolName}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="checkin"
-        options={{
-          title: "Check-in",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol
-              size={28}
-              name={"checkmark.circle.fill" as IconSymbolName}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="roulette"
-        options={{
-          title: "Roulette",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol
-              size={28}
-              name={"circle.fill" as IconSymbolName}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol
-              size={28}
-              name={"person.circle.fill" as IconSymbolName}
-              color={color}
-            />
-          ),
-        }}
-      />
-    </Tabs>
-  );
+	return (
+		<Tabs
+			screenOptions={{
+				tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+				headerShown: false,
+				tabBarButton: HapticTab,
+				tabBarBackground: TabBarBackground,
+				tabBarStyle: Platform.select({
+					ios: {
+						// Use a transparent background on iOS to show the blur effect
+						position: "absolute",
+					},
+					default: {},
+				}),
+			}}
+		>
+			<Tabs.Screen
+				name="events"
+				options={{
+					title: "Events",
+					tabBarIcon: ({ color }) => (
+						<IconSymbol
+							size={28}
+							name={"calendar" as IconSymbolName}
+							color={color}
+						/>
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="jobs"
+				options={{
+					title: "Jobs",
+					tabBarIcon: ({ color }) => (
+						<IconSymbol
+							size={28}
+							name={"briefcase.fill" as IconSymbolName}
+							color={color}
+						/>
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="checkin"
+				options={{
+					title: "Check-in",
+					tabBarIcon: ({ color }) => (
+						<IconSymbol
+							size={28}
+							name={"checkmark.circle.fill" as IconSymbolName}
+							color={color}
+						/>
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="profile"
+				options={{
+					title: "Profile",
+					tabBarIcon: ({ color }) => (
+						<IconSymbol
+							size={28}
+							name={"person.circle.fill" as IconSymbolName}
+							color={color}
+						/>
+					),
+				}}
+			/>
+		</Tabs>
+	);
 }

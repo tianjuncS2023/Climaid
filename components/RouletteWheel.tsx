@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { router } from "expo-router";
 import { StyleSheet, Pressable } from "react-native";
 
 import { ThemedView } from "@/components/ThemedView";
@@ -140,7 +141,7 @@ const RouletteWheel = () => {
 						</ThemedText>
 						<Pressable
 							style={styles.button}
-							onPress={() => console.log("Continue Pressed!")}
+							onPress={() => router.replace("/events")}
 						>
 							<ThemedText style={styles.buttonText}>
 								Continue
