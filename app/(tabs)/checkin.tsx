@@ -20,12 +20,11 @@ export default function Checkin() {
 	const navigation = useNavigation();
 
 	// Request permission for the camera
-	useEffect(() => {
-		requestPermission();
-	}, []);
 
 	// Add a listener to reset check-in state when the page is focused
 	useEffect(() => {
+
+		requestPermission();
 		const unsubscribe = navigation.addListener("focus", () => {
 			setIsCheckIn(false); // Reset check-in state on page load
 		});
