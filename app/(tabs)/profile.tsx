@@ -3,6 +3,7 @@ import { StyleSheet, Image } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ExperienceMeter } from "@/components/ExperienceMeter";
 
 export default function Profile() {
 	return (
@@ -17,6 +18,8 @@ export default function Profile() {
 			<ThemedView style={styles.titleContainer}>
 				<ThemedText type="title">Jobs</ThemedText>
 			</ThemedView>
+
+			<ExperienceMeter></ExperienceMeter>
 		</ParallaxScrollView>
 	);
 }
