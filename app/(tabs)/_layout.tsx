@@ -1,5 +1,4 @@
 import { Tabs } from "expo-router";
-import React from "react";
 import { Platform } from "react-native";
 
 import { HapticTab } from "@/components/HapticTab";
@@ -77,6 +76,12 @@ export default function TabLayout() {
 							color={color}
 						/>
 					),
+				}}
+			/>
+			<Tabs.Screen
+				name="roulette"
+				options={{
+					href: null,
 				}}
 			/>
 		</Tabs>
