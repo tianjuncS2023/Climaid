@@ -140,11 +140,11 @@ const RouletteWheel = () => {
 					if (angle < 91) {
 						_winner = groupLabels[0];
 					} else if (angle < 181) {
-						_winner = groupLabels[1];
-					} else if (angle < 271) {
 						_winner = groupLabels[2];
-					} else {
+					} else if (angle < 271) {
 						_winner = groupLabels[3];
+					} else {
+						_winner = groupLabels[1];
 					}
 
 					runOnJS(setWinner)(_winner);
