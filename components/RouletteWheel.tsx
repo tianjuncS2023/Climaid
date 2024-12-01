@@ -18,39 +18,61 @@ import Animated, {
 	runOnJS,
 } from "react-native-reanimated";
 
+const groupLabels = [
+	"Planting Crew",
+	"Cleanup Crew",
+	"Beverage Crew",
+	"Digging Crew",
+];
+
+// TODO: styling on everything
+// TODO: figure out iOS rotation
+
 const Wheel = () => {
 	return (
 		<>
 			<ThemedView style={styles.circleRow}>
 				<ThemedView style={[styles.pizza, styles.pizzaRed]}>
 					<ThemedText
-						style={[styles.label, { transform: "rotate(-135deg)" }]}
+						style={[
+							labelStyles[0],
+							{ transform: "rotate(-135deg)" },
+						]}
 					>
-						Digging Crew
+						{groupLabels[0]}
 					</ThemedText>
 				</ThemedView>
 
 				<ThemedView style={[styles.pizza, styles.pizzaBlue]}>
 					<ThemedText
-						style={[styles.label, { transform: "rotate(-45deg)" }]}
+						style={[
+							labelStyles[1],
+							{ transform: "rotate(-45deg)" },
+						]}
 					>
-						Planting Crew
+						{groupLabels[1]}
 					</ThemedText>
 				</ThemedView>
 			</ThemedView>
 			<ThemedView style={styles.circleRow}>
 				<ThemedView style={[styles.pizza, styles.pizzaGreen]}>
 					<ThemedText
-						style={[styles.label, { transform: "rotate(135deg)" }]}
+						style={[
+							labelStyles[2],
+							{ transform: "rotate(135deg)" },
+						]}
 					>
-						Refreshments Crew
+						{groupLabels[2]}
 					</ThemedText>
 				</ThemedView>
 				<ThemedView style={[styles.pizza, styles.pizzaYellow]}>
 					<ThemedText
-						style={[styles.label, { transform: "rotateZ(45deg)" }]}
+						style={[
+							labelStyles[3],
+							{ transform: "rotateZ(45deg)" },
+						]}
 					>
-						Cleanup Crew
+						{groupLabels[3]}
 					</ThemedText>
 				</ThemedView>
 			</ThemedView>
@@ -116,13 +138,13 @@ const RouletteWheel = () => {
 
 					const angle = rotation.value % 360;
 					if (angle < 91) {
-						_winner = "Red";
+						_winner = groupLabels[0];
 					} else if (angle < 181) {
-						_winner = "Green";
+						_winner = groupLabels[1];
 					} else if (angle < 271) {
-						_winner = "Yellow";
+						_winner = groupLabels[2];
 					} else {
-						_winner = "Blue";
+						_winner = groupLabels[3];
 					}
 
 					runOnJS(setWinner)(_winner);
@@ -173,10 +195,12 @@ const RouletteWheel = () => {
 							</GestureHandlerRootView>
 							<ThemedView style={styles.infoBox}>
 								{winner ? (
-									<ThemedText>Winner: {winner}</ThemedText>
+									<ThemedText type="subtitle">
+										Winner: {winner}
+									</ThemedText>
 								) : (
-									<ThemedText>
-										Spin the wheel to play!
+									<ThemedText type="subtitle">
+										{/* Spin the wheel to play! */}
 									</ThemedText>
 								)}
 							</ThemedView>
@@ -201,17 +225,58 @@ const styles = StyleSheet.create({
 		color: "black",
 		fontSize: 16,
 	},
-	label: {
+	label0: {
 		position: "absolute",
 		alignSelf: "center",
 		color: "black",
-		fontSize: 18,
+		fontSize: 20,
 		fontWeight: "bold",
-		textAlign: "center",
+		textAlign: "right",
 		justifyContent: "center",
-		width: "100%",
-		top: "40%",
+		width: "60%",
+		bottom: "15%",
+		right: "15%",
 	},
+
+	label1: {
+		position: "absolute",
+		alignSelf: "center",
+		color: "black",
+		fontSize: 20,
+		fontWeight: "bold",
+		textAlign: "left",
+		justifyContent: "center",
+		width: "60%",
+		bottom: "15%",
+		left: "15%",
+	},
+
+	label2: {
+		position: "absolute",
+		alignSelf: "center",
+		color: "black",
+		fontSize: 20,
+		fontWeight: "bold",
+		textAlign: "right",
+		justifyContent: "center",
+		width: "70%",
+		top: "15%",
+		right: "15%",
+	},
+
+	label3: {
+		position: "absolute",
+		alignSelf: "center",
+		color: "black",
+		fontSize: 20,
+		fontWeight: "bold",
+		textAlign: "left",
+		justifyContent: "center",
+		width: "70%",
+		top: "15%",
+		left: "15%",
+	},
+
 	// circleRow: { width: "100%", height: "50%", flexDirection: "row" },
 	circleRow: { width: "100%", height: "50%", flexDirection: "row" },
 	pizza: { width: "50%", height: "100%" },
@@ -280,5 +345,12 @@ const styles = StyleSheet.create({
 		fontWeight: "600",
 	},
 });
+
+const labelStyles = [
+	styles.label0,
+	styles.label1,
+	styles.label2,
+	styles.label3,
+];
 
 export default RouletteWheel;
