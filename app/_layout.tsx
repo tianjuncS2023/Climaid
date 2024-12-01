@@ -12,6 +12,8 @@ import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { RoleProvider } from "@/contexts/RoleContext";
+import { QuestionProvider } from "@/contexts/QuestionContext";
+import { JobProvider } from "@/contexts/JobContext";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -34,6 +36,8 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <QuestionProvider>
+      <JobProvider>
       <RoleProvider>
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
@@ -42,6 +46,8 @@ export default function RootLayout() {
           <Stack.Screen name="+not-found" />
         </Stack>
       </RoleProvider>
+      </JobProvider>
+      </QuestionProvider>
       <StatusBar style="auto" />
     </ThemeProvider>
   );
