@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Pressable } from "react-native";
+import { StyleSheet, View, Pressable, Platform } from "react-native";
 import { Calendar, DateData } from "react-native-calendars";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { ThemedText } from "@/components/ThemedText";
@@ -11,6 +11,7 @@ interface CalendarAndroidProps {
   onDateChange: (date: Date) => void;
   onStartTimeChange: (date: Date) => void;
   onEndTimeChange: (date: Date) => void;
+  minDate?: Date;
 }
 
 export default function CalendarAndroid({
@@ -20,17 +21,116 @@ export default function CalendarAndroid({
   onDateChange,
   onStartTimeChange,
   onEndTimeChange,
+  minDate,
 }: CalendarAndroidProps) {
   const [showStartTime, setShowStartTime] = useState(false);
   const [showEndTime, setShowEndTime] = useState(false);
 
   const formatTime = (date: Date | null) => {
     if (!date) return "Select time";
-    return date.toLocaleTimeString([], {
+    return date.toLocaleTimeString("en-US", {
       hour: "2-digit",
       minute: "2-digit",
       hour12: true,
     });
+  };
+
+  const renderTimePicker = () => {
+    if (Platform.OS === "web") {
+      return (
+        <View style={styles.timeContainer}>
+          <View style={styles.timeSection}>
+            <ThemedText style={styles.timeLabel}>Start Time:</ThemedText>
+            <input
+              type="time"
+              value={startTime ? startTime.toTimeString().slice(0, 5) : ""}
+              onChange={(e) => {
+                const [hours, minutes] = e.target.value.split(":");
+                const newDate = new Date();
+                newDate.setHours(parseInt(hours), parseInt(minutes));
+                onStartTimeChange(newDate);
+              }}
+              style={styles.webTimePicker}
+            />
+          </View>
+
+          <View style={styles.timeSection}>
+            <ThemedText style={styles.timeLabel}>End Time:</ThemedText>
+            <input
+              type="time"
+              value={endTime ? endTime.toTimeString().slice(0, 5) : ""}
+              onChange={(e) => {
+                const [hours, minutes] = e.target.value.split(":");
+                const newDate = new Date();
+                newDate.setHours(parseInt(hours), parseInt(minutes));
+                onEndTimeChange(newDate);
+              }}
+              style={styles.webTimePicker}
+            />
+          </View>
+        </View>
+      );
+    }
+
+    return (
+      <>
+        <View style={styles.timeContainer}>
+          <View style={styles.timeSection}>
+            <ThemedText style={styles.timeLabel}>Start Time:</ThemedText>
+            <Pressable
+              style={[styles.timeButton, !startTime && styles.timeButtonEmpty]}
+              onPress={() => setShowStartTime(true)}
+            >
+              <ThemedText style={styles.timeButtonText}>
+                {formatTime(startTime)}
+              </ThemedText>
+            </Pressable>
+          </View>
+
+          <View style={styles.timeSection}>
+            <ThemedText style={styles.timeLabel}>End Time:</ThemedText>
+            <Pressable
+              style={[styles.timeButton, !endTime && styles.timeButtonEmpty]}
+              onPress={() => setShowEndTime(true)}
+            >
+              <ThemedText style={styles.timeButtonText}>
+                {formatTime(endTime)}
+              </ThemedText>
+            </Pressable>
+          </View>
+        </View>
+
+        {showStartTime && (
+          <DateTimePicker
+            value={startTime || new Date()}
+            mode="time"
+            is24Hour={false}
+            onChange={(event, date) => {
+              setShowStartTime(false);
+              if (date && event.type !== "dismissed") {
+                onStartTimeChange(date);
+              }
+            }}
+            style={styles.timePicker}
+          />
+        )}
+
+        {showEndTime && (
+          <DateTimePicker
+            value={endTime || new Date()}
+            mode="time"
+            is24Hour={false}
+            onChange={(event, date) => {
+              setShowEndTime(false);
+              if (date && event.type !== "dismissed") {
+                onEndTimeChange(date);
+              }
+            }}
+            style={styles.timePicker}
+          />
+        )}
+      </>
+    );
   };
 
   return (
@@ -40,6 +140,7 @@ export default function CalendarAndroid({
           const date = new Date(day.timestamp);
           onDateChange(date);
         }}
+        minDate={minDate?.toISOString().split("T")[0]}
         markedDates={
           selectedDate
             ? {
@@ -57,61 +158,7 @@ export default function CalendarAndroid({
         }}
       />
 
-      <View style={styles.timeContainer}>
-        <View style={styles.timeSection}>
-          <ThemedText style={styles.timeLabel}>Start Time:</ThemedText>
-          <Pressable
-            style={[styles.timeButton, !startTime && styles.timeButtonEmpty]}
-            onPress={() => setShowStartTime(true)}
-          >
-            <ThemedText style={styles.timeButtonText}>
-              {formatTime(startTime)}
-            </ThemedText>
-          </Pressable>
-        </View>
-
-        <View style={styles.timeSection}>
-          <ThemedText style={styles.timeLabel}>End Time:</ThemedText>
-          <Pressable
-            style={[styles.timeButton, !endTime && styles.timeButtonEmpty]}
-            onPress={() => setShowEndTime(true)}
-          >
-            <ThemedText style={styles.timeButtonText}>
-              {formatTime(endTime)}
-            </ThemedText>
-          </Pressable>
-        </View>
-      </View>
-
-      {showStartTime && (
-        <DateTimePicker
-          value={startTime || new Date()}
-          mode="time"
-          is24Hour={false}
-          onChange={(event, date) => {
-            setShowStartTime(false);
-            if (date && event.type !== "dismissed") {
-              onStartTimeChange(date);
-            }
-          }}
-          style={styles.timePicker}
-        />
-      )}
-
-      {showEndTime && (
-        <DateTimePicker
-          value={endTime || new Date()}
-          mode="time"
-          is24Hour={false}
-          onChange={(event, date) => {
-            setShowEndTime(false);
-            if (date && event.type !== "dismissed") {
-              onEndTimeChange(date);
-            }
-          }}
-          style={styles.timePicker}
-        />
-      )}
+      {renderTimePicker()}
     </View>
   );
 }
@@ -124,36 +171,38 @@ const styles = StyleSheet.create({
   timeContainer: {
     marginTop: 20,
     paddingHorizontal: 16,
+    gap: 16,
   },
   timeSection: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
+    paddingVertical: 8,
   },
   timeLabel: {
-    fontSize: 16,
-    fontWeight: "500",
+    marginRight: 16,
   },
   timeButton: {
-    backgroundColor: "#f0f0f0",
-    padding: 10,
-    borderRadius: 8,
-    minWidth: 120,
-    alignItems: "center",
-  },
-  timeButtonEmpty: {
     borderWidth: 1,
     borderColor: "#ccc",
-    backgroundColor: "#fff",
+    borderRadius: 4,
+    padding: 8,
+    minWidth: 120,
+  },
+  timeButtonEmpty: {
+    borderStyle: "dashed",
   },
   timeButtonText: {
-    fontSize: 16,
-    color: "#000000",
+    textAlign: "center",
   },
   timePicker: {
     backgroundColor: "#fff",
+  },
+  webTimePicker: {
+    padding: 8,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 4,
+    minWidth: 120,
   },
 });

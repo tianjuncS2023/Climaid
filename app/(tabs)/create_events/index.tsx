@@ -100,6 +100,8 @@ export default function CreateEvent() {
             editable={false}
             placeholder="Select date and time"
             placeholderTextColor="#666"
+            multiline={false}
+            numberOfLines={1}
           />
           <IconSymbol
             name="chevron.right"
@@ -217,7 +219,9 @@ const styles = StyleSheet.create({
   dateInput: {
     flex: 1,
     borderWidth: 0,
-    height: "100%",
+    height: 44,
+    textAlignVertical: "center",
+    paddingVertical: 0,
   },
   dateTimeContainer: {
     flexDirection: "row",
@@ -225,7 +229,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
-    height: 44,
+    minHeight: 44,
     paddingRight: 10,
   },
   chevron: {

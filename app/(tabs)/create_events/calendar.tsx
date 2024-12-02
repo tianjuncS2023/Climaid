@@ -6,6 +6,8 @@ import { ThemedText } from "@/components/ThemedText";
 import { Pressable } from "react-native";
 import CalendarIOS from "./calendar/CalendarIOS";
 import CalendarAndroid from "./calendar/CalendarAndroid";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 
 export default function Calendar() {
   const router = useRouter();
@@ -20,7 +22,7 @@ export default function Calendar() {
     }
 
     const formatTime = (date: Date) => {
-      return date.toLocaleTimeString([], {
+      return date.toLocaleTimeString("en-US", {
         hour: "2-digit",
         minute: "2-digit",
         hour12: true,
@@ -31,21 +33,38 @@ export default function Calendar() {
       weekday: "short",
       month: "short",
       day: "numeric",
-      year: "numeric",
     });
 
-    const dateString = `${formattedDate} ${formatTime(
+    const dateString = `${formattedDate}, ${formatTime(
       startTime
     )} - ${formatTime(endTime)}`;
 
-    router.push({
-      pathname: "../",
+    router.replace({
+      pathname: "/create_events",
       params: { date: dateString },
     });
   };
 
+  const handleEndTimeChange = (date: Date) => {
+    if (startTime && date < startTime) {
+      alert("End time cannot be earlier than start time");
+      return;
+    }
+    setEndTime(date);
+  };
+
   return (
-    <ThemedView style={styles.container}>
+    <ParallaxScrollView
+      headerBackgroundColor={{ light: "#FFFFFF", dark: "#1D3D47" }}
+      headerImage={
+        <IconSymbol
+          size={310}
+          color="#808080"
+          name="chevron.left.forwardslash.chevron.right"
+          style={styles.headerImage}
+        />
+      }
+    >
       {Platform.OS === "ios" ? (
         <CalendarIOS
           selectedDate={selectedDate}
@@ -53,7 +72,8 @@ export default function Calendar() {
           endTime={endTime}
           onDateChange={setSelectedDate}
           onStartTimeChange={setStartTime}
-          onEndTimeChange={setEndTime}
+          onEndTimeChange={handleEndTimeChange}
+          minDate={new Date()}
         />
       ) : (
         <CalendarAndroid
@@ -62,7 +82,8 @@ export default function Calendar() {
           endTime={endTime}
           onDateChange={setSelectedDate}
           onStartTimeChange={setStartTime}
-          onEndTimeChange={setEndTime}
+          onEndTimeChange={handleEndTimeChange}
+          minDate={new Date()}
         />
       )}
 
@@ -78,7 +99,7 @@ export default function Calendar() {
           Confirm Date & Time
         </ThemedText>
       </Pressable>
-    </ThemedView>
+    </ParallaxScrollView>
   );
 }
 
@@ -102,5 +123,11 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "600",
+  },
+  headerImage: {
+    color: "#808080",
+    bottom: -90,
+    left: -35,
+    position: "absolute",
   },
 });
