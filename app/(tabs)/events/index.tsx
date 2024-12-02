@@ -5,10 +5,12 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { useRole, UserRole } from "@/contexts/RoleContext";
 
 export default function EventsList() {
   const { events } = useEventContext();
   const router = useRouter();
+  const { role } = useRole();
   const handleCreateEvent = () => {
     router.push(`/(tabs)/create_events`);
   };
@@ -28,7 +30,9 @@ export default function EventsList() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Events</ThemedText>
         <ThemedText type="title"></ThemedText>
-        <Button title={"Create Event"} onPress={handleCreateEvent} />
+        {role === UserRole.EVENT_ORGANIZER && (
+          <Button title={"Create Event"} onPress={handleCreateEvent} />
+        )}
       </ThemedView>
       <FlatList
         data={events}
