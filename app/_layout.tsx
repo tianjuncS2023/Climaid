@@ -12,10 +12,12 @@ import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { RoleProvider } from "@/contexts/RoleContext";
-import { EventProvider } from "@/contexts/EventContext";
 import { XPProvider } from "@/contexts/XPContext";
 import { LevelProvider } from "@/contexts/LevelContext";
+import {QuestionProvider} from "@/contexts/QuestionContext";
+import {JobProvider} from "@/contexts/JobContext";
 import {PreferencesProvider} from "@/contexts/PreferencesContext";
+import {EventProvider} from "@/contexts/EventContext";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -41,6 +43,8 @@ export default function RootLayout() {
       <QuestionProvider>
       <JobProvider>
       <RoleProvider>
+      <PreferencesProvider>
+      <EventProvider>
         <XPProvider>
           <LevelProvider>
             <Stack>
@@ -51,6 +55,8 @@ export default function RootLayout() {
             </Stack>
           </LevelProvider>
         </XPProvider>
+      </EventProvider>
+      </PreferencesProvider>
       </RoleProvider>
       </JobProvider>
       </QuestionProvider>

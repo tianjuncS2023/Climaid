@@ -3,12 +3,14 @@ import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import {ThemedText} from "@/components/ThemedText";
 import Slider from '@react-native-community/slider';
-import {Preferences, PreferencesContext, usePreferences} from "@/contexts/PreferencesContext";
-import {Navigation} from "@remix-run/router";
-import {setState} from "jest-circus";
-
+import {Preferences, usePreferences} from "@/contexts/PreferencesContext";
+import {
+    createStaticNavigation,
+    useNavigation,
+} from '@react-navigation/native';
 
 export default function PreferencesForm() {
+    const navigation = useNavigation();
     const { preferences, setPreferences } = usePreferences();
     const { control, handleSubmit, formState: { errors } } = useForm();
     const [outdoorsValue, setOutdoorsSliderValue] = useState(5);
@@ -16,7 +18,7 @@ export default function PreferencesForm() {
     const [teamPlayerValue, setTeamPlayerSliderValue] = useState(5);
     const [teamLeaderValue, setTeamLeaderSliderValue] = useState(5);
 
-    const onSubmit = (data: any) => {
+    const onSubmit = () => {
         let myPreferences: Preferences = {
             indoors: indoorsValue,
             teamPlayers: teamPlayerValue,
@@ -26,6 +28,7 @@ export default function PreferencesForm() {
 
         setPreferences(myPreferences);
         console.log(preferences);
+        navigation.navigate('preferencesSaved' as never);
     }
 
     return (
@@ -127,7 +130,7 @@ export default function PreferencesForm() {
                 />
             </div>
 
-            <Button title="Submit" onPress={handleSubmit(onSubmit)}/>
+            <Button title="Save" onPress={onSubmit}/>
         </View>
     );
 }

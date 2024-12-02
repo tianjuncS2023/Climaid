@@ -25,11 +25,9 @@ export default function PreferencesSaved (){
 
             <PreferencesChart></PreferencesChart>
 
-            {/*<div style={styles.buttonGroup}>*/}
-            {/*    <span style={styles.button}>*/}
+
                     <Button title="Change Preferences"  onPress={() => navigation.navigate('takeQuiz' as never)}/>
-                {/*</span>*/}
-                {/*<span style={styles.button}>*/}
+
                     <Button title="Apply Preferences!"  onPress={() => navigation.navigate('events' as never)} />
                 {/*</span>*/}
             {/*</div>*/}
