@@ -1,13 +1,15 @@
-import { StyleSheet, Image, Pressable } from "react-native";
+import { StyleSheet, Image, TouchableOpacity, Modal } from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { router } from "expo-router";
 import { useRole, UserRole } from "@/contexts/RoleContext";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { useState } from "react";
 
 export default function Jobs() {
   const { role } = useRole();
+  const [modal, setModal] = useState(false);
   const handleTakeQuiz = () => {
     router.replace('/takeQuiz');
   }
@@ -21,45 +23,93 @@ export default function Jobs() {
         <Image source={require("@/assets/images/partial-react-logo.png")} />
       }
     >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Jobs</ThemedText>
+      <TouchableOpacity onPress={() => setModal(true)} style={styles.head}>
+        <ThemedText style={{alignItems: "center"}}>
+          If this is the first time you open this page:
+        </ThemedText>
+        <ThemedText style={styles.linkText}>
+          What is a job preference quiz?
+        </ThemedText>
+      </TouchableOpacity>
+
+      <Modal
+        visible={modal}
+        animationType="slide"
+        onRequestClose={() => setModal(false)}
+      >
+        <ThemedView style={styles.modalStyle}>
+          <ThemedText style={{fontSize: 20, fontWeight: "bold"}}>What is a Job Preference Quiz?</ThemedText>
+          <ThemedText style={{ marginTop: 30, marginBottom: 20, marginVertical: 1}}>
+            The Job Preferences Quiz can help enthusiastic volunteers find roles that fit their skills and preferences.{"\n\n"}
+            If you are a volunteer, you can take this quiz to learn what event roles might suit your preferences.{"\n\n"}
+            If you are an event organizer, you can contribute questions to improve this quiz.{"\n"}
+            You can also create new job types and then associate the results of this quiz with existing job types!
+          </ThemedText>
+          <TouchableOpacity onPress={() => setModal(false)} style={styles.modalButton}>
+            <ThemedText>Close</ThemedText>
+          </TouchableOpacity>
+        </ThemedView>
+      </Modal>
+
+      <ThemedView style={{alignItems: "center", paddingTop:30 }}>
+        <ThemedText style={{fontSize: 20, fontWeight:"bold"}}>Find a Job Type that's right for you</ThemedText>
       </ThemedView>
-      <Pressable style={styles.button} onPress={handleTakeQuiz}>
-          <ThemedText style={styles.buttonText}>Take Quiz</ThemedText>
-        </Pressable>
-      {role === UserRole.EVENT_ORGANIZER ? 
-        <Pressable style={styles.button} onPress={handleEditQuiz}>
-          <ThemedText style={styles.buttonText}>Edit Quiz</ThemedText>
-        </Pressable> : null}
+
+      <TouchableOpacity style={[styles.button, styles.take]} onPress={handleTakeQuiz}>
+        <ThemedText style={{fontWeight:"bold"}}>Take Quiz</ThemedText>
+      </TouchableOpacity>
+
+      {role === UserRole.EVENT_ORGANIZER ? (
+        <ThemedView>
+          <ThemedView style={{alignItems: "center" }}>
+            <ThemedText style={{fontSize: 20, fontWeight:"bold", paddingBottom: 20}}>↑ OR ↓</ThemedText>
+          </ThemedView>
+
+          <ThemedView style={{alignItems: "center" }}>
+            <ThemedText style={{fontSize: 20, fontWeight:"bold"}}>Help Improve Out Quiz by Editing </ThemedText>
+          </ThemedView>
+          <TouchableOpacity style={[styles.button, styles.edit]} onPress={handleEditQuiz}>
+            <ThemedText style={{fontWeight:"bold"}}>Edit Quiz</ThemedText>
+          </TouchableOpacity>
+        </ThemedView>
+      ) : null}
     </ParallaxScrollView>
   );
 }
 
-
 const styles = StyleSheet.create({
-  container: {
+  head: {
+    marginVertical: 30,
+    alignItems: "center",
+  },
+  linkText: {
+    alignItems: "center",
+    fontSize: 20,
+    color: "#6CB4EE",
+    textDecorationLine: "underline",
+  },
+  button: {
+    paddingVertical: 12,
+    borderRadius: 20,
+    alignItems: "center",
+  },
+  take: {
+    backgroundColor: "#5F9EA0",
+    marginVertical: 20,
+  },
+  edit: {
+    backgroundColor: "#002D62",
+    marginVertical: 20,
+  },
+  modalStyle: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    gap: 40,
+    padding: 30,
   },
-  button: {
+  modalButton: {
     backgroundColor: "#0a7ea4",
-    paddingVertical: 12,
-    paddingHorizontal: 48,
-    borderRadius: 8,
-    minWidth: 240,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "600",
-  },
-  titleContainer: {
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: 220,
-    gap: 20,
+    padding: 10,
+    borderRadius: 10,
   },
 });
