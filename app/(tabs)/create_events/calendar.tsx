@@ -87,18 +87,21 @@ export default function Calendar() {
         />
       )}
 
-      <Pressable
-        style={[
-          styles.confirmButton,
-          (!selectedDate || !startTime || !endTime) && styles.disabledButton,
-        ]}
-        onPress={handleConfirm}
-        disabled={!selectedDate || !startTime || !endTime}
-      >
-        <ThemedText style={styles.confirmButtonText}>
-          Confirm Date & Time
-        </ThemedText>
-      </Pressable>
+      <ThemedView style={styles.buttonContainer}>
+        <Pressable style={styles.cancelButton} onPress={() => router.back()}>
+          <ThemedText style={styles.cancelButtonText}>Cancel</ThemedText>
+        </Pressable>
+        <Pressable
+          style={[
+            styles.previewButton,
+            (!selectedDate || !startTime || !endTime) && styles.disabledButton,
+          ]}
+          onPress={handleConfirm}
+          disabled={!selectedDate || !startTime || !endTime}
+        >
+          <ThemedText style={styles.previewButtonText}>Confirm</ThemedText>
+        </Pressable>
+      </ThemedView>
     </ParallaxScrollView>
   );
 }
@@ -129,5 +132,33 @@ const styles = StyleSheet.create({
     bottom: -90,
     left: -35,
     position: "absolute",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
+    marginBottom: 40,
+    paddingHorizontal: 32,
+  },
+  cancelButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 8,
+  },
+  cancelButtonText: {
+    color: "#000000",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  previewButton: {
+    backgroundColor: "#000000",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 8,
+  },
+  previewButtonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "600",
   },
 });

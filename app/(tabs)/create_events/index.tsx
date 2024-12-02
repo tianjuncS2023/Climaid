@@ -79,9 +79,6 @@ export default function CreateEvent() {
           style={styles.input}
           value={eventData.title}
           onChangeText={(text) => setEventData({ ...eventData, title: text })}
-          onFocus={() => {
-            // 可以添加滚动到特定位置的逻辑
-          }}
         />
 
         <ThemedText style={styles.label}>Date & Time</ThemedText>
@@ -118,9 +115,6 @@ export default function CreateEvent() {
           onChangeText={(text) =>
             setEventData({ ...eventData, location: text })
           }
-          onFocus={() => {
-            // 可以添加滚动到特定位置的逻辑
-          }}
         />
 
         <ThemedText style={styles.label}>Details</ThemedText>
@@ -129,9 +123,6 @@ export default function CreateEvent() {
           multiline
           value={eventData.details}
           onChangeText={(text) => setEventData({ ...eventData, details: text })}
-          onFocus={() => {
-            // 可以添加滚动到特定位置的逻辑
-          }}
         />
 
         <ThemedText style={styles.label}>What to Bring</ThemedText>
@@ -140,9 +131,6 @@ export default function CreateEvent() {
           multiline
           value={eventData.bring}
           onChangeText={(text) => setEventData({ ...eventData, bring: text })}
-          onFocus={() => {
-            // 可以添加滚动到特定位置的逻辑
-          }}
         />
 
         <ThemedView style={styles.buttonContainer}>
