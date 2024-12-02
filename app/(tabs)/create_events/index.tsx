@@ -85,23 +85,29 @@ export default function CreateEvent() {
         />
 
         <ThemedText style={styles.label}>Date & Time</ThemedText>
-        {/* <Pressable
+        <Pressable
           onPress={() =>
             router.push({
-              pathname: "/(tabs)/create_events/calendar",
+              pathname: "/create_events/calendar",
               params: { date: eventData.date },
             })
           }
+          style={styles.dateTimeContainer}
         >
-          <View>
-            <TextInput
-              style={styles.dateInput}
-              value={eventData.date}
-              editable={false}
-              placeholder="Select date and time"
-            />
-          </View>
-        </Pressable> */}
+          <TextInput
+            style={[styles.input, styles.dateInput]}
+            value={eventData.date}
+            editable={false}
+            placeholder="Select date and time"
+            placeholderTextColor="#666"
+          />
+          <IconSymbol
+            name="chevron.right"
+            size={20}
+            color="#666"
+            style={styles.chevron}
+          />
+        </Pressable>
 
         <ThemedText style={styles.label}>Location</ThemedText>
         <TextInput
@@ -164,6 +170,7 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 5,
     padding: 10,
+    minHeight: 44,
   },
   multiline: {
     height: 100,
@@ -208,7 +215,20 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   dateInput: {
+    flex: 1,
+    borderWidth: 0,
     height: "100%",
-    width: "100%",
+  },
+  dateTimeContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    height: 44,
+    paddingRight: 10,
+  },
+  chevron: {
+    marginLeft: 8,
   },
 });

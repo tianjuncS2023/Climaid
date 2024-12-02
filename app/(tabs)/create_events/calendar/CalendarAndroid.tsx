@@ -40,6 +40,16 @@ export default function CalendarAndroid({
           const date = new Date(day.timestamp);
           onDateChange(date);
         }}
+        markedDates={
+          selectedDate
+            ? {
+                [selectedDate.toISOString().split("T")[0]]: {
+                  selected: true,
+                  selectedColor: "#000000",
+                },
+              }
+            : {}
+        }
         theme={{
           todayTextColor: "#0a7ea4",
           selectedDayBackgroundColor: "#000000",
@@ -49,16 +59,26 @@ export default function CalendarAndroid({
 
       <View style={styles.timeContainer}>
         <View style={styles.timeSection}>
-          <ThemedText>Event Starts At:</ThemedText>
-          <Pressable onPress={() => setShowStartTime(true)}>
-            <ThemedText>{formatTime(startTime)}</ThemedText>
+          <ThemedText style={styles.timeLabel}>Start Time:</ThemedText>
+          <Pressable
+            style={[styles.timeButton, !startTime && styles.timeButtonEmpty]}
+            onPress={() => setShowStartTime(true)}
+          >
+            <ThemedText style={styles.timeButtonText}>
+              {formatTime(startTime)}
+            </ThemedText>
           </Pressable>
         </View>
 
         <View style={styles.timeSection}>
-          <ThemedText>Event Ends At:</ThemedText>
-          <Pressable onPress={() => setShowEndTime(true)}>
-            <ThemedText>{formatTime(endTime)}</ThemedText>
+          <ThemedText style={styles.timeLabel}>End Time:</ThemedText>
+          <Pressable
+            style={[styles.timeButton, !endTime && styles.timeButtonEmpty]}
+            onPress={() => setShowEndTime(true)}
+          >
+            <ThemedText style={styles.timeButtonText}>
+              {formatTime(endTime)}
+            </ThemedText>
           </Pressable>
         </View>
       </View>
@@ -70,8 +90,11 @@ export default function CalendarAndroid({
           is24Hour={false}
           onChange={(event, date) => {
             setShowStartTime(false);
-            if (date) onStartTimeChange(date);
+            if (date && event.type !== "dismissed") {
+              onStartTimeChange(date);
+            }
           }}
+          style={styles.timePicker}
         />
       )}
 
@@ -82,8 +105,11 @@ export default function CalendarAndroid({
           is24Hour={false}
           onChange={(event, date) => {
             setShowEndTime(false);
-            if (date) onEndTimeChange(date);
+            if (date && event.type !== "dismissed") {
+              onEndTimeChange(date);
+            }
           }}
+          style={styles.timePicker}
         />
       )}
     </View>
@@ -93,15 +119,41 @@ export default function CalendarAndroid({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff",
   },
   timeContainer: {
     marginTop: 20,
-    gap: 20,
+    paddingHorizontal: 16,
   },
   timeSection: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 10,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+  timeLabel: {
+    fontSize: 16,
+    fontWeight: "500",
+  },
+  timeButton: {
+    backgroundColor: "#f0f0f0",
+    padding: 10,
+    borderRadius: 8,
+    minWidth: 120,
+    alignItems: "center",
+  },
+  timeButtonEmpty: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    backgroundColor: "#fff",
+  },
+  timeButtonText: {
+    fontSize: 16,
+    color: "#000000",
+  },
+  timePicker: {
+    backgroundColor: "#fff",
   },
 });
