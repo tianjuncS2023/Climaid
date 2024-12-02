@@ -1,24 +1,30 @@
-import { Button, Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, Button } from 'react-native';
+
 
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { router } from "expo-router";
-import { SafeAreaInsetsContext } from "react-native-safe-area-context";
+import { useQuestions } from '@/contexts/QuestionContext';
+import { useJobs } from '@/contexts/JobContext';
 
 export const navigationOptions = {
   headerShown: false,
 };
 
 export default function EditQuiz() {
+  const { questions } = useQuestions();
+  const extractedList = questions.map(({ id, text }) => ({ id, text }));
+  const { jobs } = useJobs();
+  const extractedJobList = jobs.map(({ id, name }) => ({ id, name }));
 
   const addQuestion = () => {
     router.replace('/addquestion');
-  }
+  };
 
   const addRole = () => {
     router.replace('/addrole');
-  }
+  };
 
   return (
     <ParallaxScrollView
@@ -27,48 +33,67 @@ export default function EditQuiz() {
         <Image source={require("@/assets/images/partial-react-logo.png")} />
       }
     >
+    <ThemedView>
+      <ThemedText>
+        Note: This Quiz helps volunteers discover volunteer roles that match their interests. You can enhance this quiz by adding more questions for more precise insights or creating new role types for better recommendations.
+      </ThemedText>
+    </ThemedView>
+
+    
       <ThemedView>
-        <ThemedText>Note: This Quiz helps volunteers discover volunteer roles that match their interests. You can enhance this quiz by adding more questions for more precise insights or creating new role types for better recommendations.</ThemedText>
-      </ThemedView>
-      <View style = {{flexDirection:'row',flexWrap:'wrap'}}>
-        <ThemedView style={styles.titleContainer}>
-          <ThemedText type="title" style={{ fontSize: 25 }}>Question List✔️</ThemedText>
+        <ThemedView style={styles.header}>
+          <ThemedText style={{fontSize: 16, fontWeight: "bold"}}>Questions List 📝</ThemedText>
+          <Button title="Add Question" onPress={addQuestion} />
         </ThemedView>
-        <Button
-          onPress={addQuestion}
-          title="Add Question"
-          color="#FFFFFF"
-          />
-      </View>
-      
+        {extractedList.map((item) => (
+          <ThemedView key={item.id.toString()} style={styles.listItem}>
+            <ThemedView style={styles.circle}>
+              <ThemedText>{item.id.toString()}</ThemedText>
+            </ThemedView>
+            <ThemedText>{item.text}</ThemedText>
+          </ThemedView>
+        ))}
+      </ThemedView>
+
+      <ThemedView>
+        <ThemedView style={styles.header}>
+          <ThemedText style={{fontSize: 16, fontWeight: "bold"}}>Suitable Job Matches 🌱</ThemedText>
+          <Button title="Add Role" onPress={addRole} />
+        </ThemedView>
+        {extractedJobList.map((item) => (
+          <ThemedView key={item.id.toString()} style={styles.listItem}>
+            <ThemedView style={styles.circle}>
+              <ThemedText>{item.id.toString()}</ThemedText>
+            </ThemedView>
+            <ThemedText>{item.name}</ThemedText>
+          </ThemedView>
+      ))}
+      </ThemedView>
     </ParallaxScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  listItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 20,
+    padding: 12,
+    marginBottom: 8,
+  },
+  circle: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: "#DCCFFF",
+    alignItems: "center",
     justifyContent: "center",
-    alignItems: "center",
-    gap: 40,
-  },
-  button: {
-    backgroundColor: "#0a7ea4",
-    paddingVertical: 12,
-    paddingHorizontal: 48,
-    borderRadius: 8,
-    minWidth: 240,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "600",
-  },
-  titleContainer: {
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: 220,
-    gap: 20,
+    marginRight: 12,
   },
 });
