@@ -12,6 +12,8 @@ import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { RoleProvider } from "@/contexts/RoleContext";
+import { QuestionProvider } from "@/contexts/QuestionContext";
+import { JobProvider } from "@/contexts/JobContext";
 import { XPProvider } from "@/contexts/XPContext"
 import { LevelProvider } from "@/contexts/LevelContext";
 
@@ -36,6 +38,8 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <QuestionProvider>
+      <JobProvider>
       <RoleProvider>
         <XPProvider>
           <LevelProvider>
@@ -48,6 +52,8 @@ export default function RootLayout() {
           </LevelProvider>
         </XPProvider>
       </RoleProvider>
+      </JobProvider>
+      </QuestionProvider>
       <StatusBar style="auto" />
     </ThemeProvider>
   );

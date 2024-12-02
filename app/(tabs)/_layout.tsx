@@ -79,6 +79,62 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="addquestion"
+        options={{
+          href: null,
+          title: "Profile",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol
+              size={28}
+              name={"person.circle.fill" as IconSymbolName}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="addrole"
+        options={{
+          href: null,
+          title: "Profile",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol
+              size={28}
+              name={"person.circle.fill" as IconSymbolName}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="editquiz"
+        options={{
+          href: null,
+          title: "Profile",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol
+              size={28}
+              name={"person.circle.fill" as IconSymbolName}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="takeQuiz"
+        options={{
+          href: null,
+          title: "Profile",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol
+              size={28}
+              name={"person.circle.fill" as IconSymbolName}
+              color={color}
+            />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
