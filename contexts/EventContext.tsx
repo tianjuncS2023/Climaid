@@ -21,6 +21,7 @@ export interface Event {
 const EventContext = createContext<{
   events: Event[];
   joinEvent: (id: string) => void;
+  addEvent: (newEvent: Event) => void;
 } | null>(null);
 
 export const EventProvider = ({ children }: { children: React.ReactNode }) => {
@@ -463,8 +464,12 @@ export const EventProvider = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
+  const addEvent = (newEvent: Event) => {
+    setEvents((prevEvents) => [...prevEvents, newEvent]);
+  };
+
   return (
-    <EventContext.Provider value={{ events, joinEvent }}>
+    <EventContext.Provider value={{ events, joinEvent, addEvent }}>
       {children}
     </EventContext.Provider>
   );
