@@ -12,9 +12,12 @@ import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { RoleProvider } from "@/contexts/RoleContext";
-import { EventProvider } from "@/contexts/EventContext";
 import { XPProvider } from "@/contexts/XPContext";
 import { LevelProvider } from "@/contexts/LevelContext";
+import {QuestionProvider} from "@/contexts/QuestionContext";
+import {JobProvider} from "@/contexts/JobContext";
+import {PreferencesProvider} from "@/contexts/PreferencesContext";
+import {EventProvider} from "@/contexts/EventContext";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -37,27 +40,26 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <QuestionProvider>
+      <JobProvider>
+      <RoleProvider>
+      <PreferencesProvider>
       <EventProvider>
-        <RoleProvider>
-          <XPProvider>
-            <LevelProvider>
-              <Stack>
-                <Stack.Screen name="index" options={{ headerShown: false }} />
-                <Stack.Screen
-                  name="role-select"
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name="roulette"
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen name="+not-found" />
-              </Stack>
-            </LevelProvider>
-          </XPProvider>
-        </RoleProvider>
+        <XPProvider>
+          <LevelProvider>
+            <Stack>
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              <Stack.Screen name="role-select" options={{ headerShown: false }} />
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </LevelProvider>
+        </XPProvider>
       </EventProvider>
+      </PreferencesProvider>
+      </RoleProvider>
+      </JobProvider>
+      </QuestionProvider>
       <StatusBar style="auto" />
     </ThemeProvider>
   );

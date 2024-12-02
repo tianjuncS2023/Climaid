@@ -26,6 +26,10 @@ export default function TabLayout() {
         }),
       }}
     >
+
+    <Tabs.Screen name="preferencesSaved" options={{
+        href: null,
+        title: "PreferencesSaved" }} />
       <Tabs.Screen
         name="events"
         options={{
@@ -132,18 +136,6 @@ export default function TabLayout() {
               color={color}
             />
           ),
-        }}
-      />
-      <Tabs.Screen
-        name="roulette"
-        options={{
-          href: null,
-        }}
-      />
-      <Tabs.Screen
-        name="create_events"
-        options={{
-          href: null,
         }}
       />
     </Tabs>
