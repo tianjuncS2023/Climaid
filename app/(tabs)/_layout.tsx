@@ -79,6 +79,12 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="create_events"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }
