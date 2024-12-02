@@ -1,7 +1,7 @@
 import {
-	DarkTheme,
-	DefaultTheme,
-	ThemeProvider,
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -12,6 +12,7 @@ import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { RoleProvider } from "@/contexts/RoleContext";
+import { EventProvider } from "@/contexts/EventContext";
 import { XPProvider } from "@/contexts/XPContext";
 import { LevelProvider } from "@/contexts/LevelContext";
 
@@ -19,51 +20,45 @@ import { LevelProvider } from "@/contexts/LevelContext";
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-	const colorScheme = useColorScheme();
-	const [loaded] = useFonts({
-		SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-	});
+  const colorScheme = useColorScheme();
+  const [loaded] = useFonts({
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+  });
 
-	useEffect(() => {
-		if (loaded) {
-			SplashScreen.hideAsync();
-		}
-	}, [loaded]);
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
 
-	if (!loaded) {
-		return null;
-	}
+  if (!loaded) {
+    return null;
+  }
 
-	return (
-		<ThemeProvider
-			value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-		>
-			<RoleProvider>
-				<XPProvider>
-					<LevelProvider>
-						<Stack>
-							<Stack.Screen
-								name="index"
-								options={{ headerShown: false }}
-							/>
-							<Stack.Screen
-								name="role-select"
-								options={{ headerShown: false }}
-							/>
-							<Stack.Screen
-								name="roulette"
-								options={{ headerShown: false }}
-							/>
-							<Stack.Screen
-								name="(tabs)"
-								options={{ headerShown: false }}
-							/>
-							<Stack.Screen name="+not-found" />
-						</Stack>
-					</LevelProvider>
-				</XPProvider>
-			</RoleProvider>
-			<StatusBar style="auto" />
-		</ThemeProvider>
-	);
+  return (
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <EventProvider>
+        <RoleProvider>
+          <XPProvider>
+            <LevelProvider>
+              <Stack>
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+                <Stack.Screen
+                  name="role-select"
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="roulette"
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="+not-found" />
+              </Stack>
+            </LevelProvider>
+          </XPProvider>
+        </RoleProvider>
+      </EventProvider>
+      <StatusBar style="auto" />
+    </ThemeProvider>
+  );
 }

@@ -8,7 +8,7 @@ import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 
 export default function TabLayout() {
-	const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme();
 
   return (
     <Tabs
@@ -133,14 +133,19 @@ export default function TabLayout() {
             />
           ),
         }}
-
       />
-        <Tabs.Screen
-            name="roulette"
-            options={{
-                href: null,
-            }}
-        />
+      <Tabs.Screen
+        name="roulette"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="create_events"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }
