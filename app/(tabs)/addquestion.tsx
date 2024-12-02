@@ -48,6 +48,8 @@ export default function addQuestion() {
         style={styles.input}
         value={quizQuestion}
         onChangeText={setQuizQuestion}
+        placeholder="Provide a question. The question should be a statement, e.g., I enjoy going outside. Then, volunteers can either agree or disagree with it."
+        multiline
       />
     </ThemedView>
 
