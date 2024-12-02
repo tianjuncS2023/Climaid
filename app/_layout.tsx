@@ -14,6 +14,8 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import { RoleProvider } from "@/contexts/RoleContext";
 import { QuestionProvider } from "@/contexts/QuestionContext";
 import { JobProvider } from "@/contexts/JobContext";
+import { XPProvider } from "@/contexts/XPContext"
+import { LevelProvider } from "@/contexts/LevelContext";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -39,12 +41,16 @@ export default function RootLayout() {
       <QuestionProvider>
       <JobProvider>
       <RoleProvider>
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="role-select" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
+        <XPProvider>
+          <LevelProvider>
+            <Stack>
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              <Stack.Screen name="role-select" options={{ headerShown: false }} />
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </LevelProvider>
+        </XPProvider>
       </RoleProvider>
       </JobProvider>
       </QuestionProvider>
