@@ -13,6 +13,9 @@ import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { RoleProvider } from "@/contexts/RoleContext";
 import { EventProvider } from "@/contexts/EventContext";
+import { XPProvider } from "@/contexts/XPContext";
+import { LevelProvider } from "@/contexts/LevelContext";
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -36,14 +39,25 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <EventProvider>
         <RoleProvider>
-          <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="role-select" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
+          <XPProvider>
+            <LevelProvider>
+              <Stack>
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+                <Stack.Screen
+                  name="role-select"
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="roulette"
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="+not-found" />
+              </Stack>
+            </LevelProvider>
+          </XPProvider>
         </RoleProvider>
-      </EventProvider>  
+      </EventProvider>
       <StatusBar style="auto" />
     </ThemeProvider>
   );
