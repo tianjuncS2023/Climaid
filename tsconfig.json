@@ -6,7 +6,8 @@
       "@/*": [
         "./*"
       ]
-    }
+    },
+    "jsx": "react-jsx" // Use "react" for older React versions or non-automatic JSX runtime
   },
   "include": [
     "**/*.ts",
@@ -14,4 +15,6 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
   ]
+
+  
 }
