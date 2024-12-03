@@ -30,6 +30,12 @@ export default function TabLayout() {
     <Tabs.Screen name="preferencesSaved" options={{
         href: null,
         title: "PreferencesSaved" }} />
+        <Tabs.Screen name="create_events" options={{
+            href: null,
+            title: "Create Events" }} />
+        <Tabs.Screen name="roulette" options={{
+            href: null,
+            title: "Spin The Wheel" }} />
       <Tabs.Screen
         name="events"
         options={{

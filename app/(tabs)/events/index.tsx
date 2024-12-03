@@ -29,7 +29,6 @@ export default function EventsList() {
     >
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Events</ThemedText>
-        <ThemedText type="title"></ThemedText>
         {role === UserRole.EVENT_ORGANIZER && (
           <Button title={"Create Event"} onPress={handleCreateEvent} />
         )}
@@ -70,7 +69,9 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   titleContainer: {
+    display: "flex",
     flexDirection: "row",
-    gap: 8,
+    justifyContent: "space-between",
+    alignItems: "center"
   },
 });
