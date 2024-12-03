@@ -5,6 +5,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { useEventContext } from "@/contexts/EventContext";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { StyleGuide } from "@/constants/StyleGuide";
 
 export default function PreviewEvent() {
   const router = useRouter();
@@ -71,11 +72,14 @@ export default function PreviewEvent() {
       <ThemedText>{params.bring}</ThemedText>
 
       <ThemedView style={styles.buttonContainer}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
-          <ThemedText style={styles.backButtonText}>Back</ThemedText>
+        <Pressable
+          style={StyleGuide.secondary_button_2}
+          onPress={() => router.back()}
+        >
+          <ThemedText style={StyleGuide.button_text_dark}>Back</ThemedText>
         </Pressable>
-        <Pressable style={styles.createButton} onPress={handleCreate}>
-          <ThemedText style={styles.createButtonText}>Create</ThemedText>
+        <Pressable style={StyleGuide.primary_button_1} onPress={handleCreate}>
+          <ThemedText style={StyleGuide.button_text}>Create</ThemedText>
         </Pressable>
       </ThemedView>
     </ParallaxScrollView>
@@ -103,7 +107,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: 20,
     marginBottom: 40,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
   },
   backButton: {
     paddingVertical: 12,

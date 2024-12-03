@@ -4,6 +4,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { StyleGuide } from "@/constants/StyleGuide";
 
 export default function SuccessPage() {
   const router = useRouter();
@@ -45,10 +46,10 @@ export default function SuccessPage() {
 
       <ThemedView style={styles.buttonContainer}>
         <Pressable
-          style={styles.continueButton}
+          style={StyleGuide.primary_button_1}
           onPress={() => router.push("/events")}
         >
-          <ThemedText style={styles.continueButtonText}>Continue</ThemedText>
+          <ThemedText style={StyleGuide.button_text}>Continue</ThemedText>
         </Pressable>
       </ThemedView>
     </ParallaxScrollView>
