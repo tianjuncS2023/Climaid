@@ -34,7 +34,6 @@ export const StyleGuide = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
     },
-
     secondary_button_1: {
         backgroundColor: '#629584',
         textAlign: 'center',
@@ -74,5 +73,38 @@ export const StyleGuide = StyleSheet.create({
         paddingHorizontal: 32,
         display: 'flex',
         alignItems: 'center',
-    }
+    },
+    header1: {
+        fontSize: 32,
+        fontWeight: "bold",
+        fontFamily: "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+    },
+    
+    header2: {
+        fontSize: 20,
+        fontWeight: "bold",
+        fontFamily: "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+    },
+    header3: {
+        fontSize: 16,
+       fontWeight: "semibold",
+    },
+    text: {
+        fontSize: 16,
+        fontWeight: "regular",
+    },
+    link: {
+        fontSize: 16,
+        fontWeight: "regular",
+        color: '#387478',
+    },
+    circle: {
+        width: 30,
+        height: 30,
+        marginRight: 10,
+        borderRadius: 30,
+        backgroundColor: "#629584",
+        alignItems: "center",
+        justifyContent: "center",
+      },
 });

@@ -7,6 +7,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { useJobs } from "@/contexts/JobContext";
+import {StyleGuide} from "@/constants/StyleGuide";
 
 export default function addRole() {
   const { addJob, getJobListSize } = useJobs();
@@ -47,7 +48,7 @@ export default function addRole() {
       }
     >
     <ThemedView>
-      <ThemedText style={{fontSize: 16, fontWeight: "bold"}}>Name of the result (Volunteer Role)?</ThemedText>
+      <ThemedText style={StyleGuide.header2}>Name of the result (Volunteer Role)?</ThemedText>
       <TextInput
         style={styles.input}
         value={jobName}
@@ -57,7 +58,7 @@ export default function addRole() {
     </ThemedView>
 
     <ThemedView>
-      <ThemedText style={{fontSize: 16, fontWeight: "bold"}}>Short Description of the Role</ThemedText>
+      <ThemedText style={StyleGuide.header2}>Short Description of the Role</ThemedText>
       <TextInput
         style={styles.input}
         value={jobDes}
@@ -68,7 +69,7 @@ export default function addRole() {
     </ThemedView>
 
     <ThemedView>
-      <ThemedText style={{fontSize: 16, fontWeight: "bold"}}>Job Type Keywords</ThemedText>
+      <ThemedText style={StyleGuide.header2}>Job Type Keywords</ThemedText>
       <TextInput
         style={styles.input}
         value={keywords}
@@ -79,16 +80,16 @@ export default function addRole() {
     </ThemedView>
 
     <ThemedView>
-      <ThemedView style={{flexDirection: "row", marginTop: 16}}>
-        <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
-          <ThemedText style={styles.buttonText}>Cancel</ThemedText>
+      <ThemedView style={{flexDirection: "row", marginTop: 16, justifyContent: "space-between"}}>
+        <TouchableOpacity style={StyleGuide.cancel_button} onPress={handleCancel}>
+          <ThemedText style={StyleGuide.button_text}>Cancel</ThemedText>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.saveButton, !isSaveEnabled && styles.saveButtonDisabled]}
+          style={[StyleGuide.primary_button_1, !isSaveEnabled && StyleGuide.disabled_button]}
           onPress={handleSave}
           disabled={!isSaveEnabled}
         >
-          <ThemedText style={styles.buttonText}>Save & Publish</ThemedText>
+          <ThemedText style={StyleGuide.button_text}>Save & Publish</ThemedText>
         </TouchableOpacity>
       </ThemedView>
     </ThemedView>
@@ -99,33 +100,11 @@ export default function addRole() {
 const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
-    borderColor: "#FFFFFF",
-    color: "#FFFFFF",
+    borderColor: "#000000",
+    color: "#000000",
     borderRadius: 12,
     padding: 12,
     marginBottom: 16,
     marginTop: 10,
-  },
-  cancelButton: {
-    backgroundColor: "#FF6B6B",
-    padding: 12,
-    borderRadius: 12,
-    flex: 1,
-    marginRight: 8,
-  },
-  saveButton: {
-    backgroundColor: "#4CAF50",
-    padding: 12,
-    borderRadius: 12,
-    flex: 1,
-    marginLeft: 8,
-  },
-  saveButtonDisabled: {
-    backgroundColor: "#CCC",
-  },
-  buttonText: {
-    color: "#FFF",
-    textAlign: "center",
-    fontWeight: "bold",
   },
 });

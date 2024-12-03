@@ -35,10 +35,10 @@ export default function Jobs() {
       </ThemedView>
 
       <TouchableOpacity onPress={() => setModal(true)} style={styles.head}>
-        <ThemedText style={{alignItems: "center"}}>
+        <ThemedText style={[{alignItems: "center"}, StyleGuide.text]}>
           If this is the first time you open this page:
         </ThemedText>
-        <ThemedText style={styles.linkText}>
+        <ThemedText style={[{alignItems: "center"}, {textDecorationLine: "underline"}, StyleGuide.link]}>
           What is a job preference quiz?
         </ThemedText>
       </TouchableOpacity>
@@ -49,15 +49,15 @@ export default function Jobs() {
         onRequestClose={() => setModal(false)}
       >
         <ThemedView style={styles.modalStyle}>
-          <ThemedText style={{fontSize: 20, fontWeight: "bold"}}>What is a Job Preference Quiz?</ThemedText>
-          <ThemedText style={{ marginTop: 30, marginBottom: 20, marginVertical: 1}}>
+          <ThemedText style={StyleGuide.header2}>What is a Job Preference Quiz?</ThemedText>
+          <ThemedText style={[{ marginTop: 30, marginBottom: 20, marginVertical: 1}, StyleGuide.text]}>
             The Job Preferences Quiz can help enthusiastic volunteers find roles that fit their skills and preferences.{"\n\n"}
             If you are a volunteer, you can take this quiz to learn what event roles might suit your preferences.{"\n\n"}
             If you are an event organizer, you can contribute questions to improve this quiz.{"\n"}
             You can also create new job types and then associate the results of this quiz with existing job types!
           </ThemedText>
-          <TouchableOpacity onPress={() => setModal(false)} style={styles.modalButton}>
-            <ThemedText>Close</ThemedText>
+          <TouchableOpacity onPress={() => setModal(false)} style={StyleGuide.primary_button_2}>
+            <ThemedText style={{color: "white"}}>Close</ThemedText>
           </TouchableOpacity>
         </ThemedView>
       </Modal>
@@ -106,34 +106,10 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     alignItems: "center",
   },
-  linkText: {
-    alignItems: "center",
-    fontSize: 20,
-    color: "#6CB4EE",
-    textDecorationLine: "underline",
-  },
-  button: {
-    paddingVertical: 12,
-    borderRadius: 20,
-    alignItems: "center",
-  },
-  take: {
-    backgroundColor: "#5F9EA0",
-    marginVertical: 20,
-  },
-  edit: {
-    backgroundColor: "#002D62",
-    marginVertical: 20,
-  },
   modalStyle: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 30,
-  },
-  modalButton: {
-    backgroundColor: "#0a7ea4",
-    padding: 10,
-    borderRadius: 10,
   },
 });
