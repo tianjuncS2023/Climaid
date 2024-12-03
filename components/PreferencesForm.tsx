@@ -33,13 +33,13 @@ export default function PreferencesForm() {
 
     return (
         <View style={styles.container}>
-            <div style={styles.sectionContainer}>
+            <View style={styles.sectionContainer}>
                 <ThemedText type={"defaultSemiBold"}>I prefer socializing outdoors</ThemedText>
                 <Controller
                     control={control}
                     name="outdoors"
                     render={({field: {onChange, onBlur, value}}) => (
-                        <div style={styles.inputContainer}>
+                        <View style={styles.inputContainer}>
                             <Slider
                                 style={styles.slider}
                                 minimumValue={0}
@@ -51,20 +51,20 @@ export default function PreferencesForm() {
                                     onChange(value);
                                 }}
                             />
-                        </div>
+                        </View>
 
                     )}
                 />
-            </div>
+            </View>
 
-            <div style={styles.sectionContainer}>
+            <View style={styles.sectionContainer}>
                 <ThemedText type={"defaultSemiBold"}>I like getting my hands dirty with activities like
                     tree-planting</ThemedText>
                 <Controller
                     control={control}
                     name="teamPlayer"
                     render={({field: {onChange, onBlur, value}}) => (
-                        <div style={styles.inputContainer}>
+                        <View style={styles.inputContainer}>
                             <Slider
                                 style={styles.slider}
                                 minimumValue={0}
@@ -76,19 +76,19 @@ export default function PreferencesForm() {
                                     onChange(value);
                                 }}
                             />
-                        </div>
+                        </View>
 
                     )}
                 />
-            </div>
+            </View>
 
-            <div style={styles.sectionContainer}>
+            <View style={styles.sectionContainer}>
                 <ThemedText type={"defaultSemiBold"}>I am great at managing social media groups</ThemedText>
                 <Controller
                     control={control}
                     name="indoors"
                     render={({field: {onChange, onBlur, value}}) => (
-                        <div style={styles.inputContainer}>
+                        <View style={styles.inputContainer}>
                             <Slider
                                 style={styles.slider}
                                 minimumValue={0}
@@ -100,19 +100,19 @@ export default function PreferencesForm() {
                                     onChange(value);
                                 }}
                             />
-                        </div>
+                        </View>
 
                     )}
                 />
-            </div>
+            </View>
 
-            <div style={styles.sectionContainer}>
+            <View style={styles.sectionContainer}>
                 <ThemedText type={"defaultSemiBold"}>I enjoy organizing people and events</ThemedText>
                 <Controller
                     control={control}
                     name="teamLeader"
                     render={({field: {onChange, onBlur, value}}) => (
-                        <div style={styles.inputContainer}>
+                        <View style={styles.inputContainer}>
                             <Slider
                                 style={styles.slider}
                                 minimumValue={0}
@@ -124,11 +124,11 @@ export default function PreferencesForm() {
                                     onChange(value);
                                 }}
                             />
-                        </div>
+                        </View>
 
                     )}
                 />
-            </div>
+            </View>
 
             <Button title="Save" onPress={onSubmit}/>
         </View>

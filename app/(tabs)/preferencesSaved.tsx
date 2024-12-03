@@ -1,7 +1,7 @@
 import { ThemedText } from "@/components/ThemedText"
 import { ThemedView } from "@/components/ThemedView"
 import {useRole} from "@/contexts/RoleContext";
-import {Button, Pressable, StyleSheet} from "react-native";
+import {Button, Pressable, StyleSheet, View} from "react-native";
 import {PreferencesChart} from "@/components/PreferencesChart";
 import {data} from "@remix-run/router";
 import {Link} from "expo-router";
@@ -19,18 +19,20 @@ export default function PreferencesSaved (){
     return (
         <ThemedView style={styles.titleContainer}>
             <ThemedText type="title">Preferences Saved!</ThemedText>
-            {/*<div style={styles.notice}>*/}
+            <View style={styles.notice}>
                 <ThemedText type={"default"} >Thank you for taking our quiz. Your answers will be used to recommend events that would better suit your contribution style.</ThemedText>
-            {/*</div>*/}
+            </View>
 
             <PreferencesChart></PreferencesChart>
 
-
+            <View style={styles.buttonGroup}>
+                <View style={styles.button}>
                     <Button title="Change Preferences"  onPress={() => navigation.navigate('takeQuiz' as never)}/>
-
+                </View>
+                <View style={styles.button}>
                     <Button title="Apply Preferences!"  onPress={() => navigation.navigate('events' as never)} />
-                {/*</span>*/}
-            {/*</div>*/}
+                </View>
+            </View>
 
         </ThemedView>
     )
