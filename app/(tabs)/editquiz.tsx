@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Button } from 'react-native';
+import { Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
 
 
 import ParallaxScrollView from "@/components/ParallaxScrollView";
@@ -7,6 +7,8 @@ import { ThemedView } from "@/components/ThemedView";
 import { router } from "expo-router";
 import { useQuestions } from '@/contexts/QuestionContext';
 import { useJobs } from '@/contexts/JobContext';
+import {StyleGuide} from "@/constants/StyleGuide";
+import { RollInRight } from 'react-native-reanimated';
 
 export const navigationOptions = {
   headerShown: false,
@@ -34,7 +36,7 @@ export default function EditQuiz() {
       }
     >
     <ThemedView>
-      <ThemedText>
+      <ThemedText style={StyleGuide.text}>
         Note: This Quiz helps volunteers discover volunteer roles that match their interests. You can enhance this quiz by adding more questions for more precise insights or creating new role types for better recommendations.
       </ThemedText>
     </ThemedView>
@@ -42,13 +44,15 @@ export default function EditQuiz() {
     
       <ThemedView>
         <ThemedView style={styles.header}>
-          <ThemedText style={{fontSize: 16, fontWeight: "bold"}}>Questions List 📝</ThemedText>
-          <Button title="Add Question" onPress={addQuestion} />
+          <ThemedText style={StyleGuide.header2}>Questions List 📝</ThemedText>
+          <TouchableOpacity style={[{left: 38}, StyleGuide.primary_button_1,{ transform: [{ scale: 0.7 }]}]} onPress={addQuestion}>
+            <ThemedText style={{color: "white", fontWeight: "bold"}}>Add Question</ThemedText>
+          </TouchableOpacity>
         </ThemedView>
         {extractedList.map((item) => (
           <ThemedView key={item.id.toString()} style={styles.listItem}>
-            <ThemedView style={styles.circle}>
-              <ThemedText>{item.id.toString()}</ThemedText>
+            <ThemedView style={StyleGuide.circle}>
+              <ThemedText style={{color: "white"}}>{item.id.toString()}</ThemedText>
             </ThemedView>
             <ThemedText>{item.text}</ThemedText>
           </ThemedView>
@@ -57,13 +61,15 @@ export default function EditQuiz() {
 
       <ThemedView>
         <ThemedView style={styles.header}>
-          <ThemedText style={{fontSize: 16, fontWeight: "bold"}}>Suitable Job Matches 🌱</ThemedText>
-          <Button title="Add Role" onPress={addRole} />
+          <ThemedText style={StyleGuide.header2}>Suitable Job Matches 🌱</ThemedText>
+          <TouchableOpacity style={[StyleGuide.primary_button_2,{ transform: [{ scale: 0.7 }] }]} onPress={addRole}>
+            <ThemedText style={{color: "white", fontWeight: "bold"}}>Add Role</ThemedText>
+          </TouchableOpacity>
         </ThemedView>
         {extractedJobList.map((item) => (
           <ThemedView key={item.id.toString()} style={styles.listItem}>
-            <ThemedView style={styles.circle}>
-              <ThemedText>{item.id.toString()}</ThemedText>
+            <ThemedView style={StyleGuide.circle}>
+              <ThemedText style={{color: "white"}}>{item.id.toString()}</ThemedText>
             </ThemedView>
             <ThemedText>{item.name}</ThemedText>
           </ThemedView>
@@ -76,7 +82,7 @@ export default function EditQuiz() {
 const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
     alignItems: "center",
     marginBottom: 15,
   },
@@ -86,14 +92,5 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 12,
     marginBottom: 8,
-  },
-  circle: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: "#DCCFFF",
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 12,
   },
 });

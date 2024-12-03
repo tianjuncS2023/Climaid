@@ -216,3 +216,37 @@ p.thick {
     font-size: 14px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
+
+  #button-text {
+    color: white;
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    align-items: center;
+  }
+
+  #header1 {
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  #header2 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  #header3 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  #text {
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  #link {
+    font-size: 16px;
+    font-weight: 400;
+    color: #387478;
+  }
