@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { router } from "expo-router";
 import { StyleSheet, Pressable } from "react-native";
 
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
+import { StyleGuide } from "@/constants/StyleGuide";
 
 import {
 	GestureHandlerRootView,
@@ -25,17 +26,15 @@ const groupLabels = [
 	"Digging Crew",
 ];
 
-// TODO: styling on everything
-// TODO: figure out iOS rotation
-
 const Wheel = () => {
 	return (
 		<>
 			<ThemedView style={styles.circleRow}>
-				<ThemedView style={[styles.pizza, styles.pizzaRed]}>
+				<ThemedView style={[styles.pizza, styles.pizza1]}>
 					<ThemedText
 						style={[
 							labelStyles[0],
+							StyleGuide.button_text,
 							{ transform: "rotate(-135deg)" },
 						]}
 					>
@@ -43,10 +42,11 @@ const Wheel = () => {
 					</ThemedText>
 				</ThemedView>
 
-				<ThemedView style={[styles.pizza, styles.pizzaBlue]}>
+				<ThemedView style={[styles.pizza, styles.pizza2]}>
 					<ThemedText
 						style={[
 							labelStyles[1],
+							StyleGuide.button_text_dark,
 							{ transform: "rotate(-45deg)" },
 						]}
 					>
@@ -55,20 +55,22 @@ const Wheel = () => {
 				</ThemedView>
 			</ThemedView>
 			<ThemedView style={styles.circleRow}>
-				<ThemedView style={[styles.pizza, styles.pizzaGreen]}>
+				<ThemedView style={[styles.pizza, styles.pizza3]}>
 					<ThemedText
 						style={[
 							labelStyles[2],
+							StyleGuide.button_text,
 							{ transform: "rotate(135deg)" },
 						]}
 					>
 						{groupLabels[2]}
 					</ThemedText>
 				</ThemedView>
-				<ThemedView style={[styles.pizza, styles.pizzaYellow]}>
+				<ThemedView style={[styles.pizza, styles.pizza4]}>
 					<ThemedText
 						style={[
 							labelStyles[3],
+							StyleGuide.button_text,
 							{ transform: "rotateZ(45deg)" },
 						]}
 					>
@@ -94,7 +96,6 @@ const RouletteWheel = () => {
 		}
 	}, [winner]);
 
-	// Throttle updates with a lastUpdate variable
 	let lastUpdate = Date.now();
 
 	const animatedStyles = useAnimatedStyle(() => {
@@ -107,13 +108,13 @@ const RouletteWheel = () => {
 		.onUpdate((e) => {
 			if (hasSpun) return;
 
-			// Throttle updates to ~60fps
+			// Throttle updates to ~60fps, necessary for app stability
 			const now = Date.now();
 			if (now - lastUpdate > 16) {
 				const clampedVelocity = Math.max(
 					-5000,
 					Math.min(5000, e.velocityY)
-				); // Clamp velocity
+				);
 				rotation.value = rotation.value + clampedVelocity / 100;
 				lastUpdate = now;
 			}
@@ -155,24 +156,44 @@ const RouletteWheel = () => {
 	return (
 		<>
 			{group ? (
-				<ThemedView style={styles.container}>
+				<ThemedView style={styles.pageContainer}>
 					<ThemedView style={styles.titleContainer}>
-						<ThemedText type="title">{winner}</ThemedText>
-						<ThemedText type="subtitle">
-							See Group {group}
+						<ThemedText type="title">You are assigned:</ThemedText>
+						<ThemedView style={StyleGuide.secondary_button_2}>
+							<ThemedText
+								type="subtitle"
+								style={[
+									StyleGuide.button_text_dark,
+									{ fontSize: 30 },
+								]}
+							>
+								{winner}
+							</ThemedText>
+							<ThemedText
+								type="subtitle"
+								style={[
+									StyleGuide.button_text_dark,
+									{ fontSize: 76 },
+								]}
+							>
+								{group}
+							</ThemedText>
+						</ThemedView>
+						<ThemedText style={[StyleGuide.button_text_dark]}>
+							Find your group!
 						</ThemedText>
 						<Pressable
-							style={styles.button}
+							style={StyleGuide.primary_button_2}
 							onPress={() => router.replace("/events")}
 						>
-							<ThemedText style={styles.buttonText}>
+							<ThemedText style={StyleGuide.button_text}>
 								Continue
 							</ThemedText>
 						</Pressable>
 					</ThemedView>
 				</ThemedView>
 			) : (
-				<ThemedView style={styles.container}>
+				<ThemedView style={styles.pageContainer}>
 					<ThemedView style={styles.titleContainer}>
 						<ThemedText type="title">Spin for a Role!</ThemedText>
 					</ThemedView>
@@ -195,8 +216,14 @@ const RouletteWheel = () => {
 							</GestureHandlerRootView>
 							<ThemedView style={styles.infoBox}>
 								{winner ? (
-									<ThemedText type="subtitle">
-										Winner: {winner}
+									<ThemedText
+										type="subtitle"
+										style={[
+											StyleGuide.button_text_dark,
+											{ fontSize: 20 },
+										]}
+									>
+										Winner: {winner}!
 									</ThemedText>
 								) : (
 									<ThemedText type="subtitle">
@@ -212,8 +239,6 @@ const RouletteWheel = () => {
 	);
 };
 
-// TODO: move styles to separate location, reuse them
-
 const styles = StyleSheet.create({
 	rouletteWheelContainer: {
 		height: 350,
@@ -221,10 +246,7 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		justifyContent: "space-between",
 	},
-	text: {
-		color: "black",
-		fontSize: 16,
-	},
+
 	label0: {
 		position: "absolute",
 		alignSelf: "center",
@@ -277,13 +299,15 @@ const styles = StyleSheet.create({
 		left: "15%",
 	},
 
-	// circleRow: { width: "100%", height: "50%", flexDirection: "row" },
 	circleRow: { width: "100%", height: "50%", flexDirection: "row" },
+
 	pizza: { width: "50%", height: "100%" },
-	pizzaRed: { backgroundColor: "#ce4257" },
-	pizzaBlue: { backgroundColor: "#4361ee" },
-	pizzaYellow: { backgroundColor: "#fee440" },
-	pizzaGreen: { backgroundColor: "#06d6a0" },
+
+	pizza1: { backgroundColor: "#243642" },
+	pizza2: { backgroundColor: "#E2F1E7" },
+	pizza3: { backgroundColor: "#387478" },
+	pizza4: { backgroundColor: "#629584" },
+
 	circle: {
 		width: 300,
 		height: 300,
@@ -300,6 +324,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 	},
+
 	infoBox: {
 		position: "relative",
 		flexDirection: "column",
@@ -319,7 +344,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		gap: 8,
 	},
-	container: {
+	pageContainer: {
 		flex: 1,
 		alignItems: "center",
 		gap: 40,
@@ -327,22 +352,8 @@ const styles = StyleSheet.create({
 	titleContainer: {
 		flexDirection: "column",
 		alignItems: "center",
-		marginTop: 220,
+		marginTop: 120,
 		gap: 20,
-	},
-
-	button: {
-		backgroundColor: "#0a7ea4",
-		paddingVertical: 12,
-		paddingHorizontal: 48,
-		borderRadius: 8,
-		minWidth: 240,
-		alignItems: "center",
-	},
-	buttonText: {
-		color: "#fff",
-		fontSize: 18,
-		fontWeight: "600",
 	},
 });
 

@@ -10,6 +10,9 @@ import { ThemedText } from "@/components/ThemedText";
 import RouletteWheel from "@/components/RouletteWheel";
 import PointerArrowDiagram from "@/components/PointerArrowDiagram";
 import { StyleSheet } from "react-native";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { IconSymbol } from "@/components/ui/IconSymbol";
+import { StyleGuide } from "@/constants/StyleGuide";
 
 export default function Roulette() {
 	const [showCoachMark, setShowCoachMark] = useState(true);
@@ -41,59 +44,74 @@ export default function Roulette() {
 	}, []);
 
 	return (
-		<ThemedView style={styles.container}>
-			<ThemedView
-				onLayout={measureRouletteWheel}
-				style={styles.rouletteContainer}
-			>
-				<RouletteWheel />
-			</ThemedView>
-			{showCoachMark && (
-				<Modal visible={showCoachMark} transparent animationType="fade">
-					<ThemedView style={styles.overlay}>
-						<ThemedView
-							style={[
-								styles.highlight,
-								{
-									top: highlightPosition.top,
-									left: highlightPosition.left,
-									width: highlightPosition.width,
-									height: highlightPosition.height,
-								},
-							]}
-						/>
-						<ThemedView
-							style={[
-								styles.instructionBox,
-								{
-									bottom: 160,
-									left: 0,
-									right: 0,
-								},
-							]}
-						>
-							{/* <PointerArrowDiagram /> */}
+		<ParallaxScrollView
+			headerBackgroundColor={{ light: "#FFFFFF", dark: "#1D3D47" }}
+			headerImage={
+				<IconSymbol
+					size={310}
+					color="#808080"
+					name="chevron.left.forwardslash.chevron.right"
+					style={styles.headerImage}
+				/>
+			}
+		>
+			<ThemedView>
+				<ThemedView
+					onLayout={measureRouletteWheel}
+					style={styles.rouletteContainer}
+				>
+					<RouletteWheel />
+				</ThemedView>
+				{showCoachMark && (
+					<Modal
+						visible={showCoachMark}
+						transparent
+						animationType="fade"
+					>
+						<ThemedView style={styles.overlay}>
 							<ThemedView
-								style={{
-									backgroundColor: "transparent",
-									paddingLeft: 120,
-								}}
+								style={[
+									styles.highlight,
+									{
+										top: highlightPosition.top,
+										left: highlightPosition.left,
+										width: highlightPosition.width,
+										height: highlightPosition.height,
+									},
+								]}
+							/>
+							<ThemedView
+								style={[
+									styles.instructionBox,
+									{
+										bottom: 160,
+										left: 0,
+										right: 0,
+									},
+								]}
 							>
-								<PointerArrowDiagram />
+								<ThemedView
+									style={{
+										backgroundColor: "transparent",
+										paddingLeft: 120,
+									}}
+								>
+									<PointerArrowDiagram />
+								</ThemedView>
+								<TouchableOpacity
+									style={StyleGuide.primary_button_2}
+									onPress={() => setShowCoachMark(false)}
+								>
+									<ThemedText style={StyleGuide.button_text}>
+										Got it!
+									</ThemedText>
+								</TouchableOpacity>
 							</ThemedView>
-							<TouchableOpacity
-								style={styles.closeButton}
-								onPress={() => setShowCoachMark(false)}
-							>
-								<ThemedText style={styles.closeButtonText}>
-									Got it!
-								</ThemedText>
-							</TouchableOpacity>
 						</ThemedView>
-					</ThemedView>
-				</Modal>
-			)}
-		</ThemedView>
+					</Modal>
+				)}
+			</ThemedView>
+		</ParallaxScrollView>
 	);
 }
 
@@ -123,16 +141,10 @@ const styles = StyleSheet.create({
 		padding: 10,
 		alignItems: "center",
 	},
-	closeButton: {
-		marginTop: 10,
-		backgroundColor: "#007BFF",
-		padding: 10,
-		borderRadius: 5,
-		width: 150, // Fixed width to make it more centered
-		alignSelf: "center", // Ensure button is centered within its parent
-	},
-	closeButtonText: {
-		color: "white",
-		textAlign: "center",
+	headerImage: {
+		color: "#808080",
+		bottom: -90,
+		left: -35,
+		position: "absolute",
 	},
 });
