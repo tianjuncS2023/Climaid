@@ -42,7 +42,13 @@ export default function Calendar() {
 
     router.replace({
       pathname: "/create_events",
-      params: { date: dateString },
+      params: {
+        title: params.title,
+        location: params.location,
+        details: params.details,
+        bring: params.bring,
+        date: dateString,
+      },
     });
   };
 
