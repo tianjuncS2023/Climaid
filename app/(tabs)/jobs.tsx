@@ -6,6 +6,7 @@ import { router } from "expo-router";
 import { useRole, UserRole } from "@/contexts/RoleContext";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { useState } from "react";
+import {IconSymbol} from "../../components/ui/IconSymbol";
 
 export default function Jobs() {
   const { role } = useRole();
@@ -18,11 +19,20 @@ export default function Jobs() {
   }
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
+      headerBackgroundColor={{ light: "#FFFFFF", dark: "#1D3D47" }}
       headerImage={
-        <Image source={require("@/assets/images/partial-react-logo.png")} />
+        <IconSymbol
+            size={310}
+            color="#808080"
+            name="chevron.left.forwardslash.chevron.right"
+            style={styles.headerImage}
+        />
       }
     >
+      <ThemedView style={styles.titleContainer}>
+        <ThemedText type="title">Jobs and Preferences</ThemedText>
+      </ThemedView>
+
       <TouchableOpacity onPress={() => setModal(true)} style={styles.head}>
         <ThemedText style={{alignItems: "center"}}>
           If this is the first time you open this page:
@@ -78,6 +88,17 @@ export default function Jobs() {
 }
 
 const styles = StyleSheet.create({
+  titleContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between"
+  },
+  headerImage: {
+    color: "#808080",
+    bottom: -90,
+    left: -35,
+    position: "absolute",
+  },
   head: {
     marginVertical: 30,
     alignItems: "center",
