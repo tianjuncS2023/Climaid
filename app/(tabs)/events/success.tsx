@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Button,Image, FlatList } from "react-native";
 import { useEventContext } from "@/contexts/EventContext";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import {ThemedText} from "@/components/ThemedText";
+import {ThemedView} from "@/components/ThemedView";
 
 
 export default function SuccessPage() {
@@ -29,17 +31,27 @@ export default function SuccessPage() {
             }
           >
             <View style={styles.container}>
-              <Text style={styles.title}>Success! You've Joined the Event</Text>
-              <Text style={styles.title}>{event.title}</Text>
-              <View style={styles.row}>
-                <Image source={require("@/assets/images/date.png")} style={styles.tinyLogo} />
-                <Text style={styles.subtitle}>{event.date}</Text>
+              <ThemedView style={styles.titleContainer}>
+                <ThemedText type="subtitle">Success! You have joined the event:</ThemedText>
+              </ThemedView>
+              <ThemedView style={styles.titleContainer}>
+                <ThemedText type="title">{event.title}</ThemedText>
+              </ThemedView>
+              <View style={styles.rowGroup}>
+                <View style={styles.row}>
+                  <Image source={require("@/assets/images/date.png")} style={styles.tinyLogo} />
+                  <Text style={styles.subtitle}>{event.date}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Image source={require("@/assets/images/pin.png")} style={styles.tinyLogo} />
+                  <Text style={styles.subtitle}>{event.location}</Text>
+                </View>
               </View>
-              <View style={styles.row}>
-                <Image source={require("@/assets/images/pin.png")} style={styles.tinyLogo} />
-                <Text style={styles.subtitle}>{event.location}</Text>
+
+              <View style={styles.button}>
+                <Button title="Go Back to Events" onPress={() => router.push("/events")} />
               </View>
-              <Button title="Go Back to Events" onPress={() => router.push("/events")} />
+
             </View>
           </ParallaxScrollView>
           <Text style={styles.title}>Volunteer List:</Text>
@@ -65,19 +77,32 @@ export default function SuccessPage() {
 
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center",padding: 20,height:240},
-  title: { fontSize: 24, fontWeight: "bold", marginBottom: 20 },
+  button: {
+    paddingTop: 20
+  },
+  container: { flex: 1, height: 240 },
+  title: { paddingTop:20, paddingBottom:20, paddingLeft: 20 },
+  titleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 20,
+  },
   subtitle: { fontSize: 16, marginBottom: 10 },
+  rowGroup: {
+    paddingTop: 20,
+  },
   row: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 10,
+    paddingTop: 10
   },
   tinyLogo: { width: 20, height: 20, margin:5},
   volunteerItem: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 15,
+    paddingLeft: 20
   },
   avatar: {
     width: 50,

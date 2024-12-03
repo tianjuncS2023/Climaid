@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Button,Image } from "react-native";
 import { useEventContext } from "@/contexts/EventContext";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import {ThemedText} from "@/components/ThemedText";
+import {ThemedView} from "@/components/ThemedView";
 
 
 export default function EventDetails() {
@@ -31,24 +33,30 @@ export default function EventDetails() {
     }
   >
     <View style={styles.container}>
-      <Text style={styles.title}>{event.title}</Text>
-      <View style={styles.row}>
-        <Image source={require("@/assets/images/date.png")} style={styles.tinyLogo}/>
-        <Text style={styles.subtitle}>{event.date}</Text>
+      <ThemedView style={styles.titleContainer}>
+        <ThemedText type="title">{event.title}</ThemedText>
+      </ThemedView>
+      <View style={styles.rowGroup}>
+        <View style={styles.row}>
+          <Image source={require("@/assets/images/date.png")} style={styles.tinyLogo}/>
+          <Text style={styles.subtitle}>{event.date}</Text>
+        </View>
+        <View style={styles.row}>
+          <Image source={require("@/assets/images/pin.png")} style={styles.tinyLogo}/>
+          <Text style={styles.subtitle}>{event.location}</Text>
+        </View>
       </View>
-      <View style={styles.row}>
-        <Image source={require("@/assets/images/pin.png")} style={styles.tinyLogo}/>
-        <Text style={styles.subtitle}>{event.location}</Text>
-      </View>
-      <Text style={styles.title}>details</Text>
+      <Text style={styles.title}>Details</Text>
       <Text style={styles.subtitle}>{event.details}</Text>
-      <Text style={styles.title}>what to bring</Text>
+      <Text style={styles.title}>What to bring</Text>
       <Text style={styles.subtitle}>{event.bring}</Text>
-      <Button
-        title={event.joined ? "Already Joined" : "Join Event"}
-        onPress={handleJoin}
-        disabled={event.joined}
-      />
+      <View style={styles.button}>
+        <Button
+            title={event.joined ? "Already Joined" : "Join Event"}
+            onPress={handleJoin}
+            disabled={event.joined}
+        />
+      </View>
     </View>
   </ParallaxScrollView>
 
@@ -56,14 +64,27 @@ export default function EventDetails() {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    paddingTop: 20
+  },
+  titleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 20,
+    paddingBottom: 10,
+  },
   container: { flex: 1, padding: 20 },
-  title: { fontSize: 24, fontWeight: "bold" },
+  title: { fontSize: 24, fontWeight: "bold", paddingTop: 20 },
   subtitle: { fontSize: 16, marginVertical: 10 },
   tinyLogo: { width: 20, height: 20, margin:5},
+  rowGroup: {
+
+  },
   row: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 10,
+    paddingTop: 10
   },
   headerImage: {
     color: "#808080",
