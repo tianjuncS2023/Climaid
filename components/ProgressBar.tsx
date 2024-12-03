@@ -40,9 +40,11 @@ const styles = StyleSheet.create({
         width: 290,
         marginTop: 5,
         marginBottom: 5,
+        borderRadius: 5
     },
     bar: {
         height: 20,
-        backgroundColor: "#629584",
+        backgroundColor: "#387478",
+        borderRadius: 5
     },
 });
