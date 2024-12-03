@@ -36,7 +36,7 @@ export function ProgressBar() {
 const styles = StyleSheet.create({
     container: {
         height: 20,
-        backgroundColor: "grey",
+        backgroundColor: "#c5c5c5",
         width: 290,
         marginTop: 5,
         marginBottom: 5,
