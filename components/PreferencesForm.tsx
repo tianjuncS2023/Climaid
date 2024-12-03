@@ -134,7 +134,7 @@ export default function PreferencesForm() {
             </View>
 
             <Pressable style={StyleGuide.primary_button_1} onPress={onSubmit}>
-                <Text style={StyleGuide.button_text}>Save</Text>
+                <ThemedText style={StyleGuide.button_text}>Save</ThemedText>
             </Pressable>
 
         </View>

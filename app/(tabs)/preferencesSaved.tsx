@@ -1,7 +1,7 @@
 import { ThemedText } from "@/components/ThemedText"
 import { ThemedView } from "@/components/ThemedView"
 import {useRole} from "@/contexts/RoleContext";
-import {Button, Pressable, StyleSheet, View} from "react-native";
+import {Button, Pressable, StyleSheet, Text, View} from "react-native";
 import {PreferencesChart} from "@/components/PreferencesChart";
 import {data} from "@remix-run/router";
 import {Link} from "expo-router";
@@ -13,6 +13,7 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ParallaxScrollView from "../../components/ParallaxScrollView";
 import {IconSymbol} from "../../components/ui/IconSymbol";
+import {StyleGuide} from "@/constants/StyleGuide";
 
 export default function PreferencesSaved (){
     const { role } = useRole();
@@ -41,10 +42,14 @@ export default function PreferencesSaved (){
 
             <View style={styles.buttonGroup}>
                 <View style={styles.button}>
-                    <Button title="Change Preferences"  onPress={() => navigation.navigate('takeQuiz' as never)}/>
+                    <Pressable style={StyleGuide.primary_button_2} onPress={() => navigation.navigate('takeQuiz' as never)}>
+                        <ThemedText style={StyleGuide.button_text}>Redo</ThemedText>
+                    </Pressable>
                 </View>
                 <View style={styles.button}>
-                    <Button title="Apply Preferences!"  onPress={() => navigation.navigate('events' as never)} />
+                    <Pressable style={StyleGuide.primary_button_1} onPress={() => navigation.navigate('events' as never)}>
+                        <ThemedText style={StyleGuide.button_text}>Apply!</ThemedText>
+                    </Pressable>
                 </View>
             </View>
 
@@ -63,9 +68,10 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingTop: 30
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 30,
+        gap: 10
     },
     titleContainer: {
         display: "flex",

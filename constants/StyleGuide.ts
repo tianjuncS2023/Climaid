@@ -8,6 +8,12 @@ export const StyleGuide = StyleSheet.create({
         fontFamily: "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
         color: 'white',
     },
+    button_text_dark: {
+        fontSize: 18,
+        fontWeight: "bold",
+        fontFamily: "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        color: 'black',
+    },
     primary_button_1: {
         backgroundColor: '#243642',
         textAlign: 'center',

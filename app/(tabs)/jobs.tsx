@@ -1,12 +1,13 @@
-import { StyleSheet, Image, TouchableOpacity, Modal } from "react-native";
+import {StyleSheet, Image, TouchableOpacity, Modal, Pressable} from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { router } from "expo-router";
 import { useRole, UserRole } from "@/contexts/RoleContext";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { useState } from "react";
+import React, { useState } from "react";
 import {IconSymbol} from "../../components/ui/IconSymbol";
+import {StyleGuide} from "@/constants/StyleGuide";
 
 export default function Jobs() {
   const { role } = useRole();
@@ -30,7 +31,7 @@ export default function Jobs() {
       }
     >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Jobs and Preferences</ThemedText>
+        <ThemedText type="title">Job Preferences</ThemedText>
       </ThemedView>
 
       <TouchableOpacity onPress={() => setModal(true)} style={styles.head}>
@@ -65,22 +66,24 @@ export default function Jobs() {
         <ThemedText style={{fontSize: 20, fontWeight:"bold"}}>Find a Job Type that's right for you</ThemedText>
       </ThemedView>
 
-      <TouchableOpacity style={[styles.button, styles.take]} onPress={handleTakeQuiz}>
-        <ThemedText style={{fontWeight:"bold"}}>Take Quiz</ThemedText>
-      </TouchableOpacity>
+      <Pressable style={StyleGuide.primary_button_1} onPress={handleTakeQuiz}>
+        <ThemedText style={StyleGuide.button_text}>Take Quiz</ThemedText>
+      </Pressable>
 
       {role === UserRole.EVENT_ORGANIZER ? (
         <ThemedView>
           <ThemedView style={{alignItems: "center" }}>
-            <ThemedText style={{fontSize: 20, fontWeight:"bold", paddingBottom: 20}}>↑ OR ↓</ThemedText>
+            <ThemedText style={{fontSize: 20, fontWeight:"bold", paddingTop: 15, paddingBottom: 10}}>↑ OR ↓</ThemedText>
           </ThemedView>
 
-          <ThemedView style={{alignItems: "center" }}>
+          <ThemedView style={{alignItems: "center", paddingTop: 15, paddingBottom: 15 }}>
             <ThemedText style={{fontSize: 20, fontWeight:"bold"}}>Help Improve Out Quiz by Editing </ThemedText>
           </ThemedView>
-          <TouchableOpacity style={[styles.button, styles.edit]} onPress={handleEditQuiz}>
-            <ThemedText style={{fontWeight:"bold"}}>Edit Quiz</ThemedText>
-          </TouchableOpacity>
+
+          <Pressable style={StyleGuide.primary_button_2} onPress={handleEditQuiz}>
+            <ThemedText style={StyleGuide.button_text}>Edit Quiz</ThemedText>
+          </Pressable>
+
         </ThemedView>
       ) : null}
     </ParallaxScrollView>
