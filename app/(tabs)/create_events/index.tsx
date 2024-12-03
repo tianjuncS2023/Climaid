@@ -15,6 +15,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { StyleGuide } from "@/constants/StyleGuide";
 
 export default function CreateEvent() {
   const router = useRouter();
@@ -37,16 +38,16 @@ export default function CreateEvent() {
   }, [params.date]);
 
   const handlePreview = () => {
-    // if (
-    //   !eventData.title ||
-    //   !eventData.date ||
-    //   !eventData.location ||
-    //   !eventData.details ||
-    //   !eventData.bring
-    // ) {
-    //   alert("Please fill out all fields");
-    //   return;
-    // }
+    if (
+      !eventData.title ||
+      !eventData.date ||
+      !eventData.location ||
+      !eventData.details ||
+      !eventData.bring
+    ) {
+      alert("Please fill out all fields");
+      return;
+    }
     router.push({
       pathname: "/create_events/preview",
       params: eventData,
@@ -86,7 +87,7 @@ export default function CreateEvent() {
           onPress={() =>
             router.push({
               pathname: "/create_events/calendar",
-              params: { date: eventData.date },
+              params: { ...eventData, date: eventData.date },
             })
           }
           style={styles.dateTimeContainer}
@@ -134,11 +135,17 @@ export default function CreateEvent() {
         />
 
         <ThemedView style={styles.buttonContainer}>
-          <Pressable style={styles.cancelButton} onPress={() => router.back()}>
-            <ThemedText style={styles.cancelButtonText}>Cancel</ThemedText>
+          <Pressable
+            style={StyleGuide.secondary_button_2}
+            onPress={() => router.replace("/events")}
+          >
+            <ThemedText style={StyleGuide.button_text_dark}>Cancel</ThemedText>
           </Pressable>
-          <Pressable style={styles.previewButton} onPress={handlePreview}>
-            <ThemedText style={styles.previewButtonText}>Preview</ThemedText>
+          <Pressable
+            style={StyleGuide.primary_button_1}
+            onPress={handlePreview}
+          >
+            <ThemedText style={StyleGuide.button_text}>Preview</ThemedText>
           </Pressable>
         </ThemedView>
       </ParallaxScrollView>
@@ -171,7 +178,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: 20,
     marginBottom: 40,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
   },
   cancelButton: {
     paddingVertical: 12,

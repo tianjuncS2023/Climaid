@@ -8,16 +8,17 @@ import CalendarIOS from "./calendar/CalendarIOS";
 import CalendarAndroid from "./calendar/CalendarAndroid";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { StyleGuide } from "@/constants/StyleGuide";
 
 export default function Calendar() {
   const router = useRouter();
   const params = useLocalSearchParams();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [startTime, setStartTime] = useState<Date | null>(null);
+  const [startTime, setStartTime] = useState<Date | null>(new Date());
   const [endTime, setEndTime] = useState<Date | null>(null);
 
   const handleConfirm = () => {
-    if (!selectedDate || !startTime || !endTime) {
+    if (!selectedDate || !endTime) {
       return;
     }
 
@@ -88,18 +89,21 @@ export default function Calendar() {
       )}
 
       <ThemedView style={styles.buttonContainer}>
-        <Pressable style={styles.cancelButton} onPress={() => router.back()}>
-          <ThemedText style={styles.cancelButtonText}>Cancel</ThemedText>
+        <Pressable
+          style={StyleGuide.secondary_button_2}
+          onPress={() => router.back()}
+        >
+          <ThemedText style={StyleGuide.button_text_dark}>Cancel</ThemedText>
         </Pressable>
         <Pressable
           style={[
-            styles.previewButton,
-            (!selectedDate || !startTime || !endTime) && styles.disabledButton,
+            StyleGuide.primary_button_1,
+            (!selectedDate || !endTime) && StyleGuide.disabled_button,
           ]}
           onPress={handleConfirm}
-          disabled={!selectedDate || !startTime || !endTime}
+          disabled={!selectedDate || !endTime}
         >
-          <ThemedText style={styles.previewButtonText}>Confirm</ThemedText>
+          <ThemedText style={StyleGuide.button_text}>Confirm</ThemedText>
         </Pressable>
       </ThemedView>
     </ParallaxScrollView>
@@ -138,7 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: 20,
     marginBottom: 40,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
   },
   cancelButton: {
     paddingVertical: 12,
