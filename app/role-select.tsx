@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { StyleSheet, Pressable } from "react-native";
+import {StyleSheet, Pressable, Image} from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -16,6 +16,9 @@ export default function RoleSelect() {
   return (
     <ThemedView style={styles.container}>
       <ThemedView style={styles.titleContainer}>
+        <ThemedView>
+          <Image source={require("@/assets/images/climaid-logo.png")} style={styles.image}/>
+        </ThemedView>
         <ThemedText type="title">Welcome to Climaid!</ThemedText>
         <ThemedText type="subtitle"></ThemedText>
       </ThemedView>
@@ -38,6 +41,7 @@ export default function RoleSelect() {
 }
 
 const styles = StyleSheet.create({
+  image: { width: 200, height: 200 },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -60,7 +64,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "column",
     alignItems: "center",
-    marginTop: 220,
+    paddingTop: 50,
     gap: 20,
   },
 });

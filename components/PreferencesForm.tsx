@@ -1,13 +1,16 @@
 import React, {useContext, useState} from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import {View, TextInput, Button, StyleSheet, Pressable} from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import {ThemedText} from "@/components/ThemedText";
 import Slider from '@react-native-community/slider';
 import {Preferences, usePreferences} from "@/contexts/PreferencesContext";
+import { Text } from 'react-native';
+
 import {
     createStaticNavigation,
     useNavigation,
 } from '@react-navigation/native';
+import {StyleGuide} from '@/constants/StyleGuide';
 
 export default function PreferencesForm() {
     const navigation = useNavigation();
@@ -130,7 +133,10 @@ export default function PreferencesForm() {
                 />
             </View>
 
-            <Button title="Save" onPress={onSubmit}/>
+            <Pressable style={StyleGuide.primary_button_1} onPress={onSubmit}>
+                <Text style={StyleGuide.button_text}>Save</Text>
+            </Pressable>
+
         </View>
     );
 }
