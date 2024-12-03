@@ -57,6 +57,7 @@ export default function SuccessPage() {
           <Text style={styles.title}>Volunteer List:</Text>
         </>
       }
+      // TODO: center this!!!!
       data={event.volunteers}
       keyExtractor={(item, index) => `${item.name}-${index}`}
       renderItem={({ item }) => (
