@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { StyleSheet, FlatList, Pressable, Text, Button } from "react-native";
+import {StyleSheet, FlatList, Pressable, Text, Button, ScrollView} from "react-native";
 import { useEventContext } from "@/contexts/EventContext";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
@@ -34,6 +34,7 @@ export default function EventsList() {
         )}
       </ThemedView>
       <FlatList
+          style={styles.list}
         data={events}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
@@ -55,6 +56,15 @@ export default function EventsList() {
 }
 
 const styles = StyleSheet.create({
+  view: {
+    paddingTop: 80,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  list: {
+    paddingTop: 20,
+    paddingBottom:100
+  },
   item: {
     padding: 20,
     borderBottomWidth: 1,

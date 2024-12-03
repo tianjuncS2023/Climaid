@@ -24,7 +24,7 @@ export const PreferencesChart: React.FC = () => {
         <View style={styles.chart}>
             <BarChart
                 data={data}
-                width={Dimensions.get('window').width - 50}
+                // width={Dimensions.get('window').width - 60}
                 height={220}
                 maxValue={10}
                 yAxisThickness={0}
@@ -33,7 +33,7 @@ export const PreferencesChart: React.FC = () => {
                 showYAxisIndices={false}
                 showXAxisIndices={false}
                 spacing={50}
-                initialSpacing={20}
+                initialSpacing={10}
                 frontColor={styles.bar.color}
                 rulesColor={'#808080'}
             />
@@ -45,8 +45,8 @@ export const PreferencesChart: React.FC = () => {
 const styles = StyleSheet.create({
     chart: {
         paddingTop: 50,
-        paddingLeft: 20,
-        paddingRight: 20,
+        paddingLeft: 0,
+        paddingRight: 0,
     },
     bar: {
         color: '#387478'

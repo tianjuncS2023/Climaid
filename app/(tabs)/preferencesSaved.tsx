@@ -11,14 +11,28 @@ import {
     useNavigation,
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ParallaxScrollView from "../../components/ParallaxScrollView";
+import {IconSymbol} from "../../components/ui/IconSymbol";
 
 export default function PreferencesSaved (){
     const { role } = useRole();
     const navigation = useNavigation();
 
     return (
-        <ThemedView style={styles.titleContainer}>
-            <ThemedText type="title">Preferences Saved!</ThemedText>
+        <ParallaxScrollView
+            headerBackgroundColor={{ light: "#FFFFFF", dark: "#1D3D47" }}
+            headerImage={
+                <IconSymbol
+                    size={310}
+                    color="#808080"
+                    name="chevron.left.forwardslash.chevron.right"
+                    style={styles.headerImage}
+                />
+            }
+        >
+            <ThemedView style={styles.titleContainer}>
+                <ThemedText type="title">Preferences Saved!</ThemedText>
+            </ThemedView>
             <View style={styles.notice}>
                 <ThemedText type={"default"} >Thank you for taking our quiz. Your answers will be used to recommend events that would better suit your contribution style.</ThemedText>
             </View>
@@ -34,7 +48,7 @@ export default function PreferencesSaved (){
                 </View>
             </View>
 
-        </ThemedView>
+        </ParallaxScrollView>
     )
 }
 
@@ -54,10 +68,17 @@ const styles = StyleSheet.create({
         paddingTop: 30
     },
     titleContainer: {
+        display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        gap: 8,
-
+        justifyContent: "space-between"
+    },
+    headerImage: {
+        color: "#808080",
+        bottom: -90,
+        left: -35,
+        position: "absolute",
+    },
+    view: {
         paddingTop: 100,
         paddingBottom: 50,
         paddingLeft: 40,
