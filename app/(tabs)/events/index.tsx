@@ -11,6 +11,8 @@ export default function EventsList() {
   const { events } = useEventContext();
   const router = useRouter();
   const { role } = useRole();
+  const joinedevent=events.filter(event=>event.joined)
+  const otherevent=events.filter(event=>!event.joined)
   const handleCreateEvent = () => {
     router.push(`/(tabs)/create_events`);
   };
@@ -27,15 +29,15 @@ export default function EventsList() {
         />
       }
     >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Events</ThemedText>
+            <ThemedView style={styles.titleContainer}>
+        <ThemedText type="title">My Events</ThemedText>
+        <ThemedText type="title"></ThemedText>
         {role === UserRole.EVENT_ORGANIZER && (
           <Button title={"Create Event"} onPress={handleCreateEvent} />
         )}
       </ThemedView>
       <FlatList
-          style={styles.list}
-        data={events}
+        data={joinedevent}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Pressable
@@ -49,6 +51,36 @@ export default function EventsList() {
             </Text>
           </Pressable>
         )}
+        ListEmptyComponent={
+          <ThemedText type="subtitle">No events joined yet.</ThemedText>
+        }
+        scrollEnabled={false}
+      />
+      <ThemedView style={styles.titleContainer}>
+        <ThemedText type="title">Other Events</ThemedText>
+        <ThemedText type="title"></ThemedText>
+        {role === UserRole.EVENT_ORGANIZER && (
+          <Button title={"Create Event"} onPress={handleCreateEvent} />
+        )}
+      </ThemedView>
+      <FlatList
+        data={otherevent}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <Pressable
+            style={styles.item}
+            onPress={() => router.push(`/events/${item.id}`)}
+          >
+            <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.subtitle}>{item.date}</Text>
+            <Text style={styles.subtitle}>
+              {item.joined ? "Joined" : "Not Joined"}
+            </Text>
+          </Pressable>
+        )}
+        ListEmptyComponent={
+          <ThemedText type="subtitle">No other events available.</ThemedText>
+        }
         scrollEnabled={false}
       />
     </ParallaxScrollView>
