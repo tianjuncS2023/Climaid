@@ -1,8 +1,18 @@
-# Welcome to your Expo app 👋
+# Welcome to our Expo app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Get started
+
+## Get started as a Heuristics Tester
+
+1. Download the Expo Go app
+2. Log in using the following credentials:
+- Username: test1233
+- Password: test1233
+3. On the home page, click the local development server
+4. You should now see the Climaid App available
+
+## Get started as a Dev
 
 1. Install dependencies
 
