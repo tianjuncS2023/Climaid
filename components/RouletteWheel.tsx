@@ -35,7 +35,7 @@ const Wheel = () => {
 						style={[
 							labelStyles[0],
 							StyleGuide.button_text,
-							{ transform: "rotate(-135deg)" },
+							// { transform: "rotate(-135deg)" },
 						]}
 					>
 						{groupLabels[0]}
@@ -47,7 +47,7 @@ const Wheel = () => {
 						style={[
 							labelStyles[1],
 							StyleGuide.button_text_dark,
-							{ transform: "rotate(-45deg)" },
+							// { transform: "rotate(-45deg)" },
 						]}
 					>
 						{groupLabels[1]}
@@ -60,7 +60,7 @@ const Wheel = () => {
 						style={[
 							labelStyles[2],
 							StyleGuide.button_text,
-							{ transform: "rotate(135deg)" },
+							// { transform: "rotate(135deg)" },
 						]}
 					>
 						{groupLabels[2]}
@@ -71,7 +71,7 @@ const Wheel = () => {
 						style={[
 							labelStyles[3],
 							StyleGuide.button_text,
-							{ transform: "rotateZ(45deg)" },
+							// { transform: "rotateZ(45deg)" },
 						]}
 					>
 						{groupLabels[3]}
@@ -184,7 +184,13 @@ const RouletteWheel = () => {
 						</ThemedText>
 						<Pressable
 							style={StyleGuide.primary_button_2}
-							onPress={() => router.replace("/events")}
+							onPress={() => {
+								setGroup(null);
+								setWinner(null);
+								rotation.value = 0;
+								setHasSpun(false);
+								router.replace("/events");
+							}}
 						>
 							<ThemedText style={StyleGuide.button_text}>
 								Continue
