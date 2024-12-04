@@ -1,10 +1,12 @@
 import { useRouter, useLocalSearchParams } from "expo-router";
-import { StyleSheet, Text, View, Button,Image, FlatList } from "react-native";
+import { StyleSheet, Text, View, Button,Image, FlatList,Pressable } from "react-native";
 import { useEventContext } from "@/contexts/EventContext";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import {ThemedText} from "@/components/ThemedText";
 import {ThemedView} from "@/components/ThemedView";
+import { StyleGuide } from "@/constants/StyleGuide";
+
 
 
 export default function SuccessPage() {
@@ -48,9 +50,13 @@ export default function SuccessPage() {
                 </View>
               </View>
 
-              <View style={styles.button}>
-                <Button title="Go Back to Events" onPress={() => router.push("/events")} />
-              </View>
+
+              <Pressable
+                  style={StyleGuide.primary_button_2}
+                  onPress={() => router.push("/events")}
+              >
+                  <ThemedText style={StyleGuide.button_text}>Go Back to Events</ThemedText>
+              </Pressable>
 
             </View>
           </ParallaxScrollView>

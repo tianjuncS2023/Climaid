@@ -14,16 +14,6 @@ import { useXP } from '@/contexts/XPContext';
 import { useLevel } from '@/contexts/LevelContext';
 
 export function ExperienceMeter() {
-  // const rotationAnimation = useSharedValue(0);
-
-  // rotationAnimation.value = withRepeat(
-  //   withSequence(withTiming(25, { duration: 150 }), withTiming(0, { duration: 150 })),
-  //   4 // Run the animation 4 times
-  // );
-
-  // const animatedStyle = useAnimatedStyle(() => ({
-  //   transform: [{ rotate: `${rotationAnimation.value}deg` }],
-  // }));
 
 	const { experience } = useXP()
 	const { level } = useLevel()
@@ -33,7 +23,7 @@ export function ExperienceMeter() {
     <ThemedView style={styles.container}>
 		<ThemedView style={styles.header}>
 			<ThemedText style={styles.text}>
-				My Current Level
+				Volunteer Experience Points
 			</ThemedText>
 		</ThemedView>
 
@@ -58,10 +48,10 @@ export function ExperienceMeter() {
 const styles = StyleSheet.create({
 	container:{
 		marginBottom: 23,
-		marginTop: 15,
 		width: 330,
 		marginLeft: "auto",
-		marginRight: "auto"
+		marginRight: "auto",
+
 	},
 	header: {
 		backgroundColor: "#387478",
@@ -80,7 +70,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		lineHeight: 57,
 		textAlign: "center",
-		color: "#E2F1E7",
+		color: "white",
 
 	},
 	subText: {

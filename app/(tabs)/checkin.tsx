@@ -22,15 +22,15 @@ export default function Checkin() {
 	// Request permission for the camera
 
 	// Add a listener to reset check-in state when the page is focused
-	useEffect(() => {
-		requestPermission();
-		const unsubscribe = navigation.addListener("focus", () => {
-			setIsCheckIn(false); // Reset check-in state on page load
-		});
+	// useEffect(() => {
+	// 	requestPermission();
+	// 	const unsubscribe = navigation.addListener("focus", () => {
+	// 		setIsCheckIn(false); // Reset check-in state on page load
+	// 	});
 
-		// Cleanup listener when the component unmounts
-		return unsubscribe;
-	}, [navigation]);
+	// 	// Cleanup listener when the component unmounts
+	// 	return unsubscribe;
+	// }, [navigation]);
 
 	const handleXP = (increment: number) => {
 		const xp = experience;
@@ -59,17 +59,21 @@ export default function Checkin() {
 			}
 		>
 			<ThemedView>
-				<ThemedView style={styles.titleContainer}>
-					<ThemedText type="title">Check in</ThemedText>
+				<ThemedView>
+					<ThemedText type="title" style={styles.titleContainer}>Check in</ThemedText>
 				</ThemedView>
 
-				<ThemedView style={styles.titleContainer}>
+				<ThemedView>
 					<ExperienceMeter />
 				</ThemedView>
 				{isLevelUp && (
-					<ThemedView>
+					<ThemedView style={{alignItems: "center"}}>
 						<ThemedText style={styles.boldedText}>
 							Level Up!
+						</ThemedText>
+
+						<ThemedText>
+							You're now at Level {level}
 						</ThemedText>
 
 						<Pressable
@@ -101,7 +105,7 @@ export default function Checkin() {
 				)}
 
 				{isCheckIn && !isLevelUp && (
-					<ThemedView>
+					<ThemedView style={{alignItems: "center"}}>
 						<ThemedText style={styles.boldedText}>
 							Check-in Complete!
 						</ThemedText>
@@ -117,7 +121,8 @@ export default function Checkin() {
 
 						<Pressable
 							style={styles.button}
-							onPress={() => router.replace("/roulette")}
+							onPress={() => {setIsCheckIn(false); 
+								router.replace("/roulette")}}
 						>
 							<ThemedText style={styles.buttonText}>
 								Continue
@@ -138,8 +143,10 @@ const styles = StyleSheet.create({
 		position: "absolute",
 	},
 	titleContainer: {
+		display: "flex",
 		flexDirection: "row",
-		gap: 8,
+		justifyContent: "space-between",
+		marginBottom: 16
 	},
 	image: {
 		marginLeft: "auto",
@@ -156,17 +163,19 @@ const styles = StyleSheet.create({
 		color: "#243642",
 	},
 	button: {
-		backgroundColor: "#629584",
+		backgroundColor: "#243642",
 		paddingVertical: 12,
 		paddingHorizontal: 48,
-		borderRadius: 8,
-		minWidth: 240,
+		borderRadius: 36,
+		minWidth: 90,
 		alignItems: "center",
 		marginTop: 10,
+		width: 200,
 		marginBottom: 10,
+		fontFamily: `-apple - system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans - serif`
 	},
 	buttonText: {
-		color: "#E2F1E7",
+		color: "white",
 		fontSize: 18,
 		fontWeight: "600",
 	},

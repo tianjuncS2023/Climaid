@@ -1,18 +1,26 @@
 import { useRouter } from "expo-router";
-import {StyleSheet, FlatList, Pressable, Text, Button, ScrollView} from "react-native";
+import {
+  StyleSheet,
+  FlatList,
+  Pressable,
+  Text,
+  Button,
+  ScrollView,
+} from "react-native";
 import { useEventContext } from "@/contexts/EventContext";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useRole, UserRole } from "@/contexts/RoleContext";
+import { StyleGuide } from "@/constants/StyleGuide";
 
 export default function EventsList() {
   const { events } = useEventContext();
   const router = useRouter();
   const { role } = useRole();
-  const joinedevent=events.filter(event=>event.joined)
-  const otherevent=events.filter(event=>!event.joined)
+  const joinedevent = events.filter((event) => event.joined);
+  const otherevent = events.filter((event) => !event.joined);
   const handleCreateEvent = () => {
     router.push(`/(tabs)/create_events`);
   };
@@ -29,13 +37,21 @@ export default function EventsList() {
         />
       }
     >
-            <ThemedView style={styles.titleContainer}>
+      <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">My Events</ThemedText>
         <ThemedText type="title"></ThemedText>
         {role === UserRole.EVENT_ORGANIZER && (
-          <Button title={"Create Event"} onPress={handleCreateEvent} />
+          <Pressable
+            style={StyleGuide.primary_button_2_small}
+            onPress={handleCreateEvent}
+          >
+            <ThemedText style={StyleGuide.button_text_small}>
+              Create Event
+            </ThemedText>
+          </Pressable>
         )}
       </ThemedView>
+
       <FlatList
         data={joinedevent}
         keyExtractor={(item) => item.id}
@@ -57,11 +73,11 @@ export default function EventsList() {
         scrollEnabled={false}
       />
       <ThemedView style={styles.titleContainer}>
+        <ThemedText type="title"></ThemedText>
+      </ThemedView>
+      <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Other Events</ThemedText>
         <ThemedText type="title"></ThemedText>
-        {role === UserRole.EVENT_ORGANIZER && (
-          <Button title={"Create Event"} onPress={handleCreateEvent} />
-        )}
       </ThemedView>
       <FlatList
         data={otherevent}
@@ -95,7 +111,7 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingTop: 20,
-    paddingBottom:100
+    paddingBottom: 100,
   },
   item: {
     padding: 20,
@@ -114,6 +130,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
 });

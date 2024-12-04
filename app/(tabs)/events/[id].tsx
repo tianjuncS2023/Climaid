@@ -1,10 +1,11 @@
 import { useRouter, useLocalSearchParams } from "expo-router";
-import { StyleSheet, Text, View, Button,Image } from "react-native";
+import { StyleSheet, Text, View, Button,Image, Pressable } from "react-native";
 import { useEventContext } from "@/contexts/EventContext";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import {ThemedText} from "@/components/ThemedText";
 import {ThemedView} from "@/components/ThemedView";
+import { StyleGuide } from "@/constants/StyleGuide";
 
 
 export default function EventDetails() {
@@ -51,11 +52,12 @@ export default function EventDetails() {
       <Text style={styles.title}>What to bring</Text>
       <Text style={styles.subtitle}>{event.bring}</Text>
       <View style={styles.button}>
-        <Button
-            title={event.joined ? "Already Joined" : "Join Event"}
-            onPress={handleJoin}
-            disabled={event.joined}
-        />
+      <Pressable     style={[
+        StyleGuide.primary_button_1,
+        event.joined ? StyleGuide.disabled_button : StyleGuide.primary_button_2,
+    ]} onPress={handleJoin} disabled={event.joined}>
+        <ThemedText style={StyleGuide.button_text}>{event.joined ? "Already Joined" : "Join Event"}</ThemedText>
+      </Pressable>
       </View>
     </View>
   </ParallaxScrollView>

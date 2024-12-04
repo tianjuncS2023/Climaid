@@ -15,6 +15,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { StyleGuide } from "@/constants/StyleGuide";
 
 export default function CreateEvent() {
   const router = useRouter();
@@ -28,28 +29,67 @@ export default function CreateEvent() {
   });
 
   useEffect(() => {
-    if (params.date) {
-      setEventData((prev) => ({
-        ...prev,
-        date: params.date as string,
-      }));
+    // 检查并更新所有可能从 calendar 页面返回的参数
+    const updatedEventData = { ...eventData };
+    let hasUpdates = false;
+
+    // 只有当 params 中的值与当前 eventData 中的值不同时才更新
+    if (params.title && params.title !== eventData.title) {
+      updatedEventData.title = params.title as string;
+      hasUpdates = true;
     }
-  }, [params.date]);
+    if (params.date && params.date !== eventData.date) {
+      updatedEventData.date = params.date as string;
+      hasUpdates = true;
+    }
+    if (params.location && params.location !== eventData.location) {
+      updatedEventData.location = params.location as string;
+      hasUpdates = true;
+    }
+    if (params.details && params.details !== eventData.details) {
+      updatedEventData.details = params.details as string;
+      hasUpdates = true;
+    }
+    if (params.bring && params.bring !== eventData.bring) {
+      updatedEventData.bring = params.bring as string;
+      hasUpdates = true;
+    }
+
+    if (hasUpdates) {
+      setEventData(updatedEventData);
+    }
+  }, [
+    params.title,
+    params.date,
+    params.location,
+    params.details,
+    params.bring,
+  ]); // 只监听具体的 params 值
 
   const handlePreview = () => {
-    // if (
-    //   !eventData.title ||
-    //   !eventData.date ||
-    //   !eventData.location ||
-    //   !eventData.details ||
-    //   !eventData.bring
-    // ) {
-    //   alert("Please fill out all fields");
-    //   return;
-    // }
+    if (
+      !eventData.title ||
+      !eventData.date ||
+      !eventData.location ||
+      !eventData.details ||
+      !eventData.bring
+    ) {
+      alert("Please fill out all fields");
+      return;
+    }
     router.push({
       pathname: "/create_events/preview",
       params: eventData,
+    });
+  };
+
+  const handleDateTimePress = () => {
+    router.push({
+      pathname: "/create_events/calendar",
+      params: {
+        ...eventData,
+        returnTo: "create_events",
+      },
     });
   };
 
@@ -83,12 +123,7 @@ export default function CreateEvent() {
 
         <ThemedText style={styles.label}>Date & Time</ThemedText>
         <Pressable
-          onPress={() =>
-            router.push({
-              pathname: "/create_events/calendar",
-              params: { date: eventData.date },
-            })
-          }
+          onPress={handleDateTimePress}
           style={styles.dateTimeContainer}
         >
           <TextInput
@@ -134,11 +169,17 @@ export default function CreateEvent() {
         />
 
         <ThemedView style={styles.buttonContainer}>
-          <Pressable style={styles.cancelButton} onPress={() => router.back()}>
-            <ThemedText style={styles.cancelButtonText}>Cancel</ThemedText>
+          <Pressable
+            style={StyleGuide.secondary_button_2}
+            onPress={() => router.replace("/events")}
+          >
+            <ThemedText style={StyleGuide.button_text_dark}>Cancel</ThemedText>
           </Pressable>
-          <Pressable style={styles.previewButton} onPress={handlePreview}>
-            <ThemedText style={styles.previewButtonText}>Preview</ThemedText>
+          <Pressable
+            style={StyleGuide.primary_button_1}
+            onPress={handlePreview}
+          >
+            <ThemedText style={StyleGuide.button_text}>Preview</ThemedText>
           </Pressable>
         </ThemedView>
       </ParallaxScrollView>
@@ -171,7 +212,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: 20,
     marginBottom: 40,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
   },
   cancelButton: {
     paddingVertical: 12,

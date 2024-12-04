@@ -1,13 +1,12 @@
 import { StyleSheet, Image, TextInput, TouchableOpacity, View } from "react-native";
 
-
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { useQuestions } from "@/contexts/QuestionContext";
-import {StyleGuide} from "@/constants/StyleGuide";
+import { StyleGuide } from "@/constants/StyleGuide";
 
 export default function addQuestion() {
   const { addQuestion, getQuestionListSize } = useQuestions();
@@ -20,38 +19,40 @@ export default function addQuestion() {
       const newQuestion = {
         id: getQuestionListSize() + 1,
         text: quizQuestion.trim(),
-        keywordList: keywords.split(',').map((tag) => tag.trim()),
+        keywordList: keywords.split(",").map((tag) => tag.trim()),
       };
       addQuestion(newQuestion);
       setQuizQuestion("");
       setKeywords("");
-      router.replace('/editquiz');
+      router.replace("/editquiz");
     }
   };
 
   const handleCancel = () => {
     setQuizQuestion("");
     setKeywords("");
-    router.replace('/editquiz');
+    router.replace("/editquiz");
   };
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
+      headerBackgroundColor={{ light: "#FFFFFF", dark: "#1D3D47" }}
       headerImage={
         <Image source={require("@/assets/images/partial-react-logo.png")} />
       }
     >
-    <ThemedView>
-      <ThemedText style={StyleGuide.header2}>What is the Quiz Question?</ThemedText>
-      <TextInput
-        style={styles.input}
-        value={quizQuestion}
-        onChangeText={setQuizQuestion}
-        placeholder="Provide a question. The question should be a statement, e.g., I enjoy going outside. Then, volunteers can either agree or disagree with it."
-        multiline
-      />
-    </ThemedView>
+      <ThemedView>
+        <ThemedText style={StyleGuide.header2}>
+          What is the Quiz Question?
+        </ThemedText>
+        <TextInput
+          style={styles.input}
+          value={quizQuestion}
+          onChangeText={setQuizQuestion}
+          placeholder="Provide a question. The question should be a statement, e.g., I enjoy going outside. Then, volunteers can either agree or disagree with it."
+          multiline
+        />
+      </ThemedView>
 
     <ThemedView>
       <ThemedText style={StyleGuide.header2}>Question Keywords</ThemedText>
@@ -72,20 +73,34 @@ export default function addQuestion() {
       </ThemedText>
     </ThemedView>
 
-    <ThemedView>
-      <ThemedView style={{flexDirection: "row", marginTop: 16, justifyContent: "space-between"}}>
-        <TouchableOpacity style={StyleGuide.cancel_button} onPress={handleCancel}>
-          <ThemedText style={StyleGuide.button_text}>Cancel</ThemedText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[StyleGuide.primary_button_1, !isSaveEnabled && StyleGuide.disabled_button]}
-          onPress={handleSave}
-          disabled={!isSaveEnabled}
+      <ThemedView>
+        <ThemedView
+          style={{
+            flexDirection: "row",
+            marginTop: 16,
+            justifyContent: "space-between",
+          }}
         >
-          <ThemedText style={StyleGuide.button_text}>Save & Publish</ThemedText>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={StyleGuide.cancel_button}
+            onPress={handleCancel}
+          >
+            <ThemedText style={StyleGuide.button_text}>Cancel</ThemedText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              StyleGuide.primary_button_1,
+              !isSaveEnabled && StyleGuide.disabled_button,
+            ]}
+            onPress={handleSave}
+            disabled={!isSaveEnabled}
+          >
+            <ThemedText style={StyleGuide.button_text}>
+              Save & Publish
+            </ThemedText>
+          </TouchableOpacity>
+        </ThemedView>
       </ThemedView>
-    </ThemedView>
     </ParallaxScrollView>
   );
 }
@@ -104,8 +119,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 8,
   },
-  slider: {
-    paddingTop: 20,
-    paddingBottom: 20,
-}
 });
