@@ -15,7 +15,6 @@ import { ThemedView } from "@/components/ThemedView";
 import { useRole, UserRole } from "@/contexts/RoleContext";
 import { StyleGuide } from "@/constants/StyleGuide";
 
-
 export default function EventsList() {
   const { events } = useEventContext();
   const router = useRouter();
@@ -39,16 +38,18 @@ export default function EventsList() {
       }
     >
       <ThemedView style={styles.titleContainer}>
-          <ThemedText type="title">My Events</ThemedText>
-          <ThemedText type="title"></ThemedText>
-          {role === UserRole.EVENT_ORGANIZER && (
-              <Pressable
-                  style={StyleGuide.primary_button_2}
-                  onPress={handleCreateEvent}
-              >
-                  <ThemedText style={StyleGuide.button_text}>Create Event</ThemedText>
-              </Pressable>
-          )}
+        <ThemedText type="title">My Events</ThemedText>
+        <ThemedText type="title"></ThemedText>
+        {role === UserRole.EVENT_ORGANIZER && (
+          <Pressable
+            style={StyleGuide.primary_button_2_small}
+            onPress={handleCreateEvent}
+          >
+            <ThemedText style={StyleGuide.button_text_small}>
+              Create Event
+            </ThemedText>
+          </Pressable>
+        )}
       </ThemedView>
 
       <FlatList
@@ -71,6 +72,9 @@ export default function EventsList() {
         }
         scrollEnabled={false}
       />
+      <ThemedView style={styles.titleContainer}>
+        <ThemedText type="title"></ThemedText>
+      </ThemedView>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Other Events</ThemedText>
         <ThemedText type="title"></ThemedText>

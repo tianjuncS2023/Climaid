@@ -1,14 +1,13 @@
-import { Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
-
+import { Image, StyleSheet, Button, TouchableOpacity } from "react-native";
 
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { router } from "expo-router";
-import { useQuestions } from '@/contexts/QuestionContext';
-import { useJobs } from '@/contexts/JobContext';
-import {StyleGuide} from "@/constants/StyleGuide";
-import { RollInRight } from 'react-native-reanimated';
+import { useQuestions } from "@/contexts/QuestionContext";
+import { useJobs } from "@/contexts/JobContext";
+import { StyleGuide } from "@/constants/StyleGuide";
+import { RollInRight } from "react-native-reanimated";
 
 export const navigationOptions = {
   headerShown: false,
@@ -21,38 +20,51 @@ export default function EditQuiz() {
   const extractedJobList = jobs.map(({ id, name }) => ({ id, name }));
 
   const addQuestion = () => {
-    router.replace('/addquestion');
+    router.replace("/addquestion");
   };
 
   const addRole = () => {
-    router.replace('/addrole');
+    router.replace("/addrole");
   };
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
+      headerBackgroundColor={{ light: "#FFFFFF", dark: "#1D3D47" }}
       headerImage={
         <Image source={require("@/assets/images/partial-react-logo.png")} />
       }
     >
-    <ThemedView>
-      <ThemedText style={StyleGuide.text}>
-        Note: This Quiz helps volunteers discover volunteer roles that match their interests. You can enhance this quiz by adding more questions for more precise insights or creating new role types for better recommendations.
-      </ThemedText>
-    </ThemedView>
+      <ThemedView>
+        <ThemedText style={StyleGuide.text}>
+          Note: This Quiz helps volunteers discover volunteer roles that match
+          their interests. You can enhance this quiz by adding more questions
+          for more precise insights or creating new role types for better
+          recommendations.
+        </ThemedText>
+      </ThemedView>
 
-    
       <ThemedView>
         <ThemedView style={styles.header}>
           <ThemedText style={StyleGuide.header2}>Questions List 📝</ThemedText>
-          <TouchableOpacity style={[{left: 38}, StyleGuide.primary_button_1,{ transform: [{ scale: 0.7 }]}]} onPress={addQuestion}>
-            <ThemedText style={{color: "white", fontWeight: "bold"}}>Add Question</ThemedText>
+          <TouchableOpacity
+            style={[
+              { left: 38 },
+              StyleGuide.primary_button_1,
+              { transform: [{ scale: 0.7 }] },
+            ]}
+            onPress={addQuestion}
+          >
+            <ThemedText style={{ color: "white", fontWeight: "bold" }}>
+              Add Question
+            </ThemedText>
           </TouchableOpacity>
         </ThemedView>
         {extractedList.map((item) => (
           <ThemedView key={item.id.toString()} style={styles.listItem}>
             <ThemedView style={StyleGuide.circle}>
-              <ThemedText style={{color: "white"}}>{item.id.toString()}</ThemedText>
+              <ThemedText style={{ color: "white" }}>
+                {item.id.toString()}
+              </ThemedText>
             </ThemedView>
             <ThemedText>{item.text}</ThemedText>
           </ThemedView>
@@ -61,19 +73,31 @@ export default function EditQuiz() {
 
       <ThemedView>
         <ThemedView style={styles.header}>
-          <ThemedText style={StyleGuide.header2}>Suitable Job Matches 🌱</ThemedText>
-          <TouchableOpacity style={[StyleGuide.primary_button_2,{ transform: [{ scale: 0.7 }] }]} onPress={addRole}>
-            <ThemedText style={{color: "white", fontWeight: "bold"}}>Add Role</ThemedText>
+          <ThemedText style={StyleGuide.header2}>
+            Suitable Job Matches 🌱
+          </ThemedText>
+          <TouchableOpacity
+            style={[
+              StyleGuide.primary_button_2,
+              { transform: [{ scale: 0.7 }] },
+            ]}
+            onPress={addRole}
+          >
+            <ThemedText style={{ color: "white", fontWeight: "bold" }}>
+              Add Role
+            </ThemedText>
           </TouchableOpacity>
         </ThemedView>
         {extractedJobList.map((item) => (
           <ThemedView key={item.id.toString()} style={styles.listItem}>
             <ThemedView style={StyleGuide.circle}>
-              <ThemedText style={{color: "white"}}>{item.id.toString()}</ThemedText>
+              <ThemedText style={{ color: "white" }}>
+                {item.id.toString()}
+              </ThemedText>
             </ThemedView>
             <ThemedText>{item.name}</ThemedText>
           </ThemedView>
-      ))}
+        ))}
       </ThemedView>
     </ParallaxScrollView>
   );
