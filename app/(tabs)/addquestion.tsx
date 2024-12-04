@@ -1,4 +1,4 @@
-import { StyleSheet, Image, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, Image, TextInput, TouchableOpacity, View } from "react-native";
 
 
 import ParallaxScrollView from "@/components/ParallaxScrollView";
@@ -13,8 +13,7 @@ export default function addQuestion() {
   const { addQuestion, getQuestionListSize } = useQuestions();
   const [quizQuestion, setQuizQuestion] = useState("");
   const [keywords, setKeywords] = useState("");
-
-  const isSaveEnabled = quizQuestion.trim() !== "" && keywords.split(',').length > 1;
+  const isSaveEnabled = quizQuestion.trim() !== "" && keywords.length>0;
 
   const handleSave = () => {
     if (isSaveEnabled) {
@@ -59,7 +58,7 @@ export default function addQuestion() {
       <TextInput
         style={styles.input}
         value={keywords}
-        placeholder="Use comma (,) to separate each keyword, for example, tag1,tag2,tag3."
+        placeholder="Enter several keywords of this question. Use comma (,) to separate each keyword, for example, tag1,tag2,tag3."
         onChangeText={setKeywords}
         multiline
       />
@@ -71,8 +70,6 @@ export default function addQuestion() {
         in the quiz. Volunteers answer the question by rating it from 1
         (strongly disagree) to 10 (strongly agree).
       </ThemedText>
-
-      <ThemedText style={[styles.label, StyleGuide.header2]}>Like This ↓</ThemedText>
     </ThemedView>
 
     <ThemedView>
@@ -107,4 +104,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 8,
   },
+  slider: {
+    paddingTop: 20,
+    paddingBottom: 20,
+}
 });

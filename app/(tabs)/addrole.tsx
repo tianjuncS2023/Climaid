@@ -14,8 +14,7 @@ export default function addRole() {
   const [jobName, setJobName] = useState("");
   const [jobDes, setJobDes] = useState("");
   const [keywords, setKeywords] = useState("");
-
-  const isSaveEnabled = jobName.trim() !== "" && jobDes.trim() !== "" && keywords.split(',').length > 1;
+  const isSaveEnabled = jobName.trim() !== "" && jobDes.trim() !== "" && keywords.length>0;
 
   const handleSave = () => {
     if (isSaveEnabled) {
@@ -73,7 +72,7 @@ export default function addRole() {
       <TextInput
         style={styles.input}
         value={keywords}
-        placeholder="Use comma (,) to separate each keyword, for example, tag1,tag2,tag3."
+        placeholder="Enter several keywords of this volunteer role. Use comma (,) to separate each keyword, for example, tag1,tag2,tag3."
         onChangeText={setKeywords}
         multiline
       />
