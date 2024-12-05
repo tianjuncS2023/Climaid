@@ -127,4 +127,13 @@ export const StyleGuide = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  tag_new: {
+    width: 60,
+    height: 30,
+    backgroundColor: "#629584",
+    marginLeft: "auto",
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  }
 });

@@ -1,4 +1,4 @@
-import { StyleSheet, Image, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, Image, TextInput, TouchableOpacity, Alert, Modal } from "react-native";
 
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
@@ -11,6 +11,7 @@ import { StyleGuide } from "@/constants/StyleGuide";
 export default function addRole() {
   const { addJob, getJobListSize } = useJobs();
   const [jobName, setJobName] = useState("");
+  const [modal, setModal] = useState(false);
   const [jobDes, setJobDes] = useState("");
   const [keywords, setKeywords] = useState("");
   const isSaveEnabled = jobName.trim() !== "" && jobDes.trim() !== "" && keywords.length>0;
@@ -27,6 +28,9 @@ export default function addRole() {
       setJobName("");
       setJobDes("");
       setKeywords("");
+      Alert.alert("Thanks!",
+        "You have sucessully created a volunteer role."
+      )
       router.replace("/editquiz");
     }
   };
@@ -46,6 +50,29 @@ export default function addRole() {
       }
     >
       <ThemedView>
+      <TouchableOpacity onPress={() => setModal(true)} style={styles.head}>
+          <ThemedText style={[{alignItems: "center"}, {textDecorationLine: "underline"}, StyleGuide.link]}>
+            I need help to write a volunteer job!
+          </ThemedText>
+          <Modal
+            visible={modal}
+            animationType="slide"
+            onRequestClose={() => setModal(false)}
+            >
+            <ThemedView style={styles.modalStyle}>
+            <ThemedText style={StyleGuide.header2}>How to Write a Volunteer Job Match</ThemedText>
+            <ThemedText style={[{ marginTop: 30, marginBottom: 20, marginVertical: 1}, StyleGuide.text]}>
+              A Volunteer Job Match is a type of volunteer job that volunteers could be interested in. The job reflects volunteers' preferences and interests.{"\n\n"}
+              You need to provide the role name, with the useful description of the role. Make sure to include the responsibilities and what kinds of personalities this type of job could match to.{"\n\n"}
+              It is better if you can add some keywords related to the job match, like "outdoor" or "speech".{"\n\n"}
+              To add more than one keywords, use comma (,) to separate them. For example: "outdoor;speech"
+            </ThemedText>
+            <TouchableOpacity onPress={() => setModal(false)} style={StyleGuide.primary_button_2}>
+              <ThemedText style={{color: "white"}}>Close</ThemedText>
+            </TouchableOpacity>
+          </ThemedView>
+          </Modal>
+        </TouchableOpacity>
         <ThemedText style={StyleGuide.header2}>
           Name of the result (Volunteer Role)?
         </ThemedText>
@@ -114,6 +141,10 @@ export default function addRole() {
 }
 
 const styles = StyleSheet.create({
+  head: {
+    marginVertical: 30,
+    alignItems: "center",
+  },
   input: {
     borderWidth: 1,
     borderColor: "#000000",
@@ -122,5 +153,11 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 16,
     marginTop: 10,
+  },
+  modalStyle: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 30,
   },
 });

@@ -7,7 +7,6 @@ import { router } from "expo-router";
 import { useQuestions } from "@/contexts/QuestionContext";
 import { useJobs } from "@/contexts/JobContext";
 import { StyleGuide } from "@/constants/StyleGuide";
-import { RollInRight } from "react-native-reanimated";
 
 export const navigationOptions = {
   headerShown: false,
@@ -59,14 +58,19 @@ export default function EditQuiz() {
             </ThemedText>
           </TouchableOpacity>
         </ThemedView>
-        {extractedList.map((item) => (
-          <ThemedView key={item.id.toString()} style={styles.listItem}>
+        {extractedList.map((item, index) => (
+          <ThemedView key={item.id.toString()} style={[styles.listItem, index == extractedList.length - 1 && {backgroundColor: "#E2F1E7"}]}>
             <ThemedView style={StyleGuide.circle}>
               <ThemedText style={{ color: "white" }}>
                 {item.id.toString()}
               </ThemedText>
             </ThemedView>
             <ThemedText>{item.text}</ThemedText>
+            {index === extractedList.length - 1 && (
+              <ThemedView style={StyleGuide.tag_new}>
+                <ThemedText style={StyleGuide.button_text}> NEW </ThemedText>
+              </ThemedView>
+            )}
           </ThemedView>
         ))}
       </ThemedView>
@@ -88,14 +92,19 @@ export default function EditQuiz() {
             </ThemedText>
           </TouchableOpacity>
         </ThemedView>
-        {extractedJobList.map((item) => (
-          <ThemedView key={item.id.toString()} style={styles.listItem}>
+        {extractedJobList.map((item, index) => (
+          <ThemedView key={item.id.toString()} style={[styles.listItem, index == extractedJobList.length - 1 && {backgroundColor: "#E2F1E7"}]}>
             <ThemedView style={StyleGuide.circle}>
               <ThemedText style={{ color: "white" }}>
                 {item.id.toString()}
               </ThemedText>
             </ThemedView>
             <ThemedText>{item.name}</ThemedText>
+            {index === extractedJobList.length - 1 && (
+              <ThemedView style={StyleGuide.tag_new}>
+                <ThemedText style={StyleGuide.button_text}> NEW </ThemedText>
+              </ThemedView>
+            )}
           </ThemedView>
         ))}
       </ThemedView>
