@@ -17,20 +17,13 @@ export default function Checkin() {
 	const [isCheckIn, setIsCheckIn] = useState(false);
 	const [isLevelUp, setIsLevelUp] = useState(false);
 	const [permission, requestPermission] = useCameraPermissions();
-	const navigation = useNavigation();
 
 	// Request permission for the camera
 
-	// Add a listener to reset check-in state when the page is focused
-	// useEffect(() => {
-	// 	requestPermission();
-	// 	const unsubscribe = navigation.addListener("focus", () => {
-	// 		setIsCheckIn(false); // Reset check-in state on page load
-	// 	});
-
-	// 	// Cleanup listener when the component unmounts
-	// 	return unsubscribe;
-	// }, [navigation]);
+	//Add a listener to reset check-in state when the page is focused
+	useEffect(() => {
+		requestPermission();
+	});
 
 	const handleXP = (increment: number) => {
 		const xp = experience;
