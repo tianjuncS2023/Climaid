@@ -1,110 +1,132 @@
-# Welcome to our Expo app 👋
+# Climaid
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Welcome to Climaid, an app designed to make Climate Activism Delightful!
 
+## Contents
 
-## Get started as a Heuristics Tester
+1. [Instructions](#instructions)
+    - [For Heuristics Testers](#for-heuristics-testers)
+    - [For Contributors](#for-contributors)
+2. [Technology Stack](#technology-stack)
+    - [Why Mobile Over Web](#why-mobile-over-web)
+3. [Limitations](#limitations)
+4. [Style Guide](#style-guide)
+5. [References](#references)
 
-1. Download the Expo Go app
-2. Log in using the following credentials:
-- Username: test1233
-- Password: test1233
-3. On the home page, click the local development server
-4. You should now see the Climaid App available
+## Instructions
 
-## Get started as a Dev
+If you want to explore the development version of the Climaid app, see the instructions under [**For Heuristics Testers**](#for-heuristics-testers).
 
-1. Install dependencies
+To contribute to Climaid's development, follow the instructions in [**For Contributors**](#for-contributors).
 
+### For Heuristics Testers
+
+To test the Climaid App, you will need an iOS device and access to a Climaid development server on your Wi-Fi network. Follow these steps:
+
+1. Download the [Expo Go app](https://apps.apple.com/us/app/expo-go/id982107779) on your iOS device.
+2. Log in using these credentials:
+    ```
+    Username: test1233
+    Password: test1233
+    ```
+3. After logging in, you should see the development server in Expo Go. Tap to connect.
+
+Your iOS device will now download a native build of the Climaid app. Since no login flow is implemented, you will be prompted to select either "Event Organizer" or "Volunteer" before using the app. For the full feature set, choose "Event Organizer," as it offers additional privileges.
+
+### For Contributors
+
+To contribute to Climaid's development, follow these steps:
+
+1. Install Node.js version 22+.
+2. Clone the repository:
+    ```bash
+    git clone git@github.com:tianjuncS2023/Climaid.git
+    ```
+3. Install required npm modules:
     ```bash
     npm install
     ```
+4. Create an Expo Go account. Alternatively, you can use the credentials provided in [**For Heuristics Testers**](#for-heuristics-testers).  
+   Install the [Expo Go app](https://apps.apple.com/us/app/expo-go/id982107779) on your mobile device and log in.
 
-2. Start the app
+5. Log in to Expo on your development computer using:
 
     ```bash
-     npx expo start
+    npx expo login
     ```
 
-In the output, you'll find options to open the app in a
+    Enter your credentials when prompted.
 
--   [development build](https://docs.expo.dev/develop/development-builds/introduction/)
--   [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
--   [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
--   [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+6. Start the development server:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+    ```bash
+    npx expo start
+    ```
 
-## Get a fresh project
+    Options for testing the app include:
 
-When you're ready, run:
+    - [Development builds](https://docs.expo.dev/develop/development-builds/introduction/)
+    - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+    - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+    - [Expo Go](https://expo.dev/go), a sandbox for development.
 
-```bash
-npm run reset-project
-```
+For more details about the project structure and contributing guidelines, refer to [CONTRIBUTING.md](CONTRIBUTING.md).
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Technology Stack
 
-## Learn more
+We selected a tech stack optimized for native mobile applications, as Climaid is designed for volunteers to use during climate action events. Learn more in [Why Mobile Over Web](#why-mobile-over-web).
 
-To learn more about developing your project with Expo, look at the following resources:
+### TypeScript
 
--   [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
--   [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+TypeScript is our primary programming language, extending JavaScript with static typing. It simplifies development by integrating seamlessly with the Expo framework.
 
-## Join the community
+### React Native
 
-Join our community of developers creating universal apps.
+React Native enables cross-platform app development with a single codebase for iOS and Android. This approach ensures efficiency while maintaining a native app experience.
 
--   [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
--   [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Expo
 
-## Tabs
+Expo is our development environment and toolchain, providing:
 
-All tabs are located in the /app/(tabs) directory, with each .tsx file representing a separate page:
+-   Access to native device features
+-   Simplified deployment and testing
+-   Prototyping capabilities
+-   Streamlined build and configuration
 
--   index.tsx corresponds to the event list page and uses the root route /
--   Other tab pages can be accessed via their respective routes (e.g. /jobs for the job page)
+### Why Mobile Over Web?
 
-Note: The icons implementation differs between iOS and web platforms, with icon definitions located in the /components/ui/IconSymbol.tsx file.
+A native mobile app offers distinct advantages for dynamic, on-site environments:
 
-## User Role Management & Logistics
+-   Immediate access to information without relying on browsers
+-   Interfaces optimized for quick, on-the-go interactions
+-   Camera integration for QR code scanning
 
-The app asks users to choose from the following two user roles:
+These features make a mobile app more effective for climate activism than a general-purpose web application.
 
--   Volunteer (0)
--   Event Organizer (1)
+## Limitations
 
-### Key Components:
+Our development focused on creating user-centric features, emphasizing UI and UX. Backend functionality is simplified or hard-coded in this demo version.
 
-1. **Role Context**
+### Key Limitations
 
-    - Located in `/contexts/RoleContext.tsx`
-    - Manages user role state across the app
-    - Provides `useRole` hook for accessing and setting roles
+1. **Login Flow**: Users select a one-time role—"Volunteer" or "Event Organizer"—instead of using a full authentication system. Select "Event Organizer" for access to all features.
+2. **Mobile-first Design**: The app is optimized for mobile use via Expo Go.
+3. **Hard-coded Data**: Event details, volunteer lists, and spin-the-wheel content are pre-populated.
+4. **QR Code Check-ins**: The check-in feature accepts any QR code but lacks validation.
+5. **Job Quiz Logic**: The Job Quiz demonstrates user interaction but does not influence recommendations.
+6. **User Profile Page**: Displays minimal information (e.g., experience points, level) and serves as a placeholder for future enhancements.
 
-2. **Role Selection Screen**
+## Style Guide
 
-    - Located in `/app/role-select.tsx`
-    - Initial screen for role selection
-    - Redirects to events page after selection
+Our style guide can be found here: [Climaid Style Guide](https://sasirekha3.github.io/srid-climaid-style-guide/).
 
-3. **Layout Changes**
-    - Modified `/app/_layout.tsx` to include role selection flow
-    - Added RoleProvider wrapper for global state management
+## References
 
-### Navigation Flow:
-
-1. User starts at role selection screen
-2. Upon selecting a role, user is redirected to events tab
-3. Role information persists throughout the app session
-
-### Example Usage
-
-1. import { useRole } from "@/contexts/RoleContext";
-2. const { role } = useRole();
-3. Use role in the component as needed
-
-### References
-
-Roulette wheel: https://benhur-martins.medium.com/how-to-build-a-roulette-wheel-with-react-native-85516d36ce30
+-   [TypeScript Reference](https://www.typescriptlang.org/docs/)
+-   [NPM Documentation](https://docs.npmjs.com/)
+-   [Expo Framework Documentation](https://docs.expo.dev/)
+-   [React Native Documentation](https://reactnative.dev/docs/getting-started)
+-   [Pure React Documentation](https://react.dev/)
+-   [React Gestures Wheel Tutorial](https://benhur-martins.medium.com/how-to-build-a-roulette-wheel-with-react-native-85516d36ce30)
+-   [React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler/docs/)
+-   [React Native Reanimated (Gesture Library)](https://docs.swmansion.com/react-native-reanimated/)
