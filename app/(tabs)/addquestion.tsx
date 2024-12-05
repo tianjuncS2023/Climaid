@@ -1,4 +1,4 @@
-import { StyleSheet, Image, TextInput, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Image, TextInput, TouchableOpacity, Alert, Modal } from "react-native";
 
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
@@ -11,6 +11,7 @@ import { StyleGuide } from "@/constants/StyleGuide";
 export default function addQuestion() {
   const { addQuestion, getQuestionListSize } = useQuestions();
   const [quizQuestion, setQuizQuestion] = useState("");
+  const [modal, setModal] = useState(false);
   const [keywords, setKeywords] = useState("");
   const isSaveEnabled = quizQuestion.trim() !== "" && keywords.length>0;
 
@@ -24,6 +25,9 @@ export default function addQuestion() {
       addQuestion(newQuestion);
       setQuizQuestion("");
       setKeywords("");
+      Alert.alert("Thanks!",
+        "You have sucessully created a quiz question."
+      )
       router.replace("/editquiz");
     }
   };
@@ -42,6 +46,29 @@ export default function addQuestion() {
       }
     >
       <ThemedView>
+        <TouchableOpacity onPress={() => setModal(true)} style={styles.head}>
+          <ThemedText style={[{alignItems: "center"}, {textDecorationLine: "underline"}, StyleGuide.link]}>
+            I need help to write a quiz question!
+          </ThemedText>
+          <Modal
+            visible={modal}
+            animationType="slide"
+            onRequestClose={() => setModal(false)}
+            >
+            <ThemedView style={styles.modalStyle}>
+            <ThemedText style={StyleGuide.header2}>How to Write a Quiz Question</ThemedText>
+            <ThemedText style={[{ marginTop: 30, marginBottom: 20, marginVertical: 1}, StyleGuide.text]}>
+              A Quiz Question is a question that appears in the volunteer-job-preference quiz to help volunteers find suitable jobs.{"\n\n"}
+              You need to provide the question content. It should be a statement to agree or disagree. For example: I like dog.{"\n\n"}
+              It is better if you can add some keywords related to the question, like "outdoor" or "recreation".{"\n\n"}
+              To add more than one keywords, use comma (,) to separate them. For example: "outdoor;recreation"
+            </ThemedText>
+            <TouchableOpacity onPress={() => setModal(false)} style={StyleGuide.primary_button_2}>
+              <ThemedText style={{color: "white"}}>Close</ThemedText>
+            </TouchableOpacity>
+          </ThemedView>
+          </Modal>
+        </TouchableOpacity>
         <ThemedText style={StyleGuide.header2}>
           What is the Quiz Question?
         </ThemedText>
@@ -106,6 +133,10 @@ export default function addQuestion() {
 }
 
 const styles = StyleSheet.create({
+  head: {
+    marginVertical: 30,
+    alignItems: "center",
+  },
   input: {
     borderWidth: 1,
     borderColor: "#000000",
@@ -118,5 +149,11 @@ const styles = StyleSheet.create({
   label: {
     textAlign: "center",
     marginBottom: 8,
+  },
+  modalStyle: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 30,
   },
 });
