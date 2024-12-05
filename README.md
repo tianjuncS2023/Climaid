@@ -1,6 +1,8 @@
-# Climaid
+# Climaid   
+<img src="assets/images/climaid-logo.png" alt="Climaid Logo" width="100" />
 
 Welcome to Climaid, an app designed to make Climate Activism Delightful!
+
 
 ## Contents
 
