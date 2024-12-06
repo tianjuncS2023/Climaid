@@ -57,6 +57,7 @@ export default function CalendarIOS({
             onChange={(event, date) => {
               if (date) onStartTimeChange(date);
             }}
+            maximumDate={endTime || undefined}
           />
         </View>
 
@@ -69,6 +70,7 @@ export default function CalendarIOS({
             onChange={(event, date) => {
               if (date) onEndTimeChange(date);
             }}
+            minimumDate={startTime || undefined}
           />
         </View>
       </View>
