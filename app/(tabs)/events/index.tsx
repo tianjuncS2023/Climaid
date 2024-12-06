@@ -14,16 +14,36 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useRole, UserRole } from "@/contexts/RoleContext";
 import { StyleGuide } from "@/constants/StyleGuide";
+import {Preferences, usePreferences} from "@/contexts/PreferencesContext";
 
 export default function EventsList() {
+  const { preferences } = usePreferences();
   const { events } = useEventContext();
   const router = useRouter();
   const { role } = useRole();
   const joinedevent = events.filter((event) => event.joined);
-  const otherevent = events.filter((event) => !event.joined);
+  let otherevent = events.filter((event) => !event.joined);
   const handleCreateEvent = () => {
     router.push(`/(tabs)/create_events`);
   };
+
+  function score(jobTypes: string[], preferences: Preferences): number {
+    if (jobTypes.length == 0) return 0;
+    let test: { [key: string]: number } = {
+      "indoors": preferences.indoors,
+      "outdoors": preferences.outdoors,
+      "teamLeader": preferences.teamLeaders,
+      "teamPlayer": preferences.teamPlayers
+    }
+    let totalScore = 1.0;
+    for (let job of jobTypes) {
+      totalScore = totalScore + (test[job]) as number;
+    }
+
+    return totalScore;
+  }
+
+  otherevent = otherevent.sort((a, b) => score(b.jobTypes, preferences) - score(a.jobTypes, preferences));
 
   return (
     <ParallaxScrollView
