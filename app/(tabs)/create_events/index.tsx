@@ -26,6 +26,7 @@ export default function CreateEvent() {
     location: "",
     details: "",
     bring: "",
+    jobTypes: ["indoors", "teamLeader"]
   });
 
   useEffect(() => {
