@@ -8,7 +8,7 @@ import {
   Platform,
   ScrollView,
   Keyboard,
-  View,
+  View
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
@@ -29,11 +29,9 @@ export default function CreateEvent() {
   });
 
   useEffect(() => {
-    // 检查并更新所有可能从 calendar 页面返回的参数
     const updatedEventData = { ...eventData };
     let hasUpdates = false;
 
-    // 只有当 params 中的值与当前 eventData 中的值不同时才更新
     if (params.title && params.title !== eventData.title) {
       updatedEventData.title = params.title as string;
       hasUpdates = true;
@@ -64,7 +62,7 @@ export default function CreateEvent() {
     params.location,
     params.details,
     params.bring,
-  ]); // 只监听具体的 params 值
+  ]);
 
   const handlePreview = () => {
     if (
@@ -263,5 +261,5 @@ const styles = StyleSheet.create({
   },
   chevron: {
     marginLeft: 8,
-  },
+  }
 });

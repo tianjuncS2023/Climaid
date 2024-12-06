@@ -33,7 +33,15 @@ export default function EventDetails() {
       />
     }
   >
+
+
     <View style={styles.container}>
+      <Pressable onPress={() => router.back()}>
+        <Image 
+          style={styles.backBotton}
+          source={require("@/assets/images/back.png")} 
+        />
+      </Pressable>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">{event.title}</ThemedText>
       </ThemedView>
@@ -94,4 +102,11 @@ const styles = StyleSheet.create({
     left: -35,
     position: "absolute",
   },
+  backBotton:{
+    width: 20,
+    height: 20,
+    marginLeft:-30,
+    marginBottom:20,
+    marginTop:-30
+  }
 });
