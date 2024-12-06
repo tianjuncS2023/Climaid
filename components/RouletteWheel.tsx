@@ -19,12 +19,7 @@ import Animated, {
 	runOnJS,
 } from "react-native-reanimated";
 
-const groupLabels = [
-	"Planting Crew",
-	"Cleanup Crew",
-	"Beverage Crew",
-	"Digging Crew",
-];
+const groupLabels = ["Oak Crew", "Birch Crew", "Willow Crew", "Coconut Crew"];
 
 const Wheel = () => {
 	return (
