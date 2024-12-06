@@ -56,6 +56,8 @@ export default function CreateEvent() {
       hasUpdates = true;
     }
 
+    updatedEventData.jobTypes = ["indoors", "teamLeader"]
+
     if (hasUpdates) {
       setEventData(updatedEventData);
     }

@@ -28,7 +28,7 @@ export default function EventsList() {
   };
 
   function score(jobTypes: string[], preferences: Preferences): number {
-    if (jobTypes.length == 0) return 0;
+    if (jobTypes === undefined || jobTypes.length === undefined || jobTypes.length == 0) return 0;
     let test: { [key: string]: number } = {
       "indoors": preferences.indoors,
       "outdoors": preferences.outdoors,
