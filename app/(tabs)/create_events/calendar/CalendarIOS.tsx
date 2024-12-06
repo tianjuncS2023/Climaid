@@ -42,7 +42,9 @@ export default function CalendarIOS({
           todayTextColor: "#0a7ea4",
           selectedDayBackgroundColor: "#000000",
           selectedDayTextColor: "#ffffff",
+          textDisabledColor: "#d9e1e8",
         }}
+        minDate={new Date().toISOString().split("T")[0]}
       />
 
       <View style={styles.timeContainer}>
@@ -55,6 +57,7 @@ export default function CalendarIOS({
             onChange={(event, date) => {
               if (date) onStartTimeChange(date);
             }}
+            maximumDate={endTime || undefined}
           />
         </View>
 
@@ -67,6 +70,7 @@ export default function CalendarIOS({
             onChange={(event, date) => {
               if (date) onEndTimeChange(date);
             }}
+            minimumDate={startTime || undefined}
           />
         </View>
       </View>

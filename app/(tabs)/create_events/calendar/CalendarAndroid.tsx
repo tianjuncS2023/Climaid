@@ -108,7 +108,11 @@ export default function CalendarAndroid({
             onChange={(event, date) => {
               setShowStartTime(false);
               if (date && event.type !== "dismissed") {
-                onStartTimeChange(date);
+                if (!endTime || date <= endTime) {
+                  onStartTimeChange(date);
+                } else {
+                  alert("Start time cannot be later than end time");
+                }
               }
             }}
             style={styles.timePicker}
@@ -123,7 +127,11 @@ export default function CalendarAndroid({
             onChange={(event, date) => {
               setShowEndTime(false);
               if (date && event.type !== "dismissed") {
-                onEndTimeChange(date);
+                if (!startTime || date >= startTime) {
+                  onEndTimeChange(date);
+                } else {
+                  alert("End time cannot be earlier than start time");
+                }
               }
             }}
             style={styles.timePicker}
